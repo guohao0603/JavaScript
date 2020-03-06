@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>页面滚动</title>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin:  0;
+        list-style: none;
+    }
+    /*美化webkit内核滚动条*/
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #777;
+        border-radius: 10px;
+    }
+    header {
+        width: 100%;
+        height:10vh;
+        min-height: 60px;
+        position: fixed;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        background-color: #eeeeee;
+    }
+    #choose {
+        width: 300px;
+        height: 30px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        outline:none;
+        cursor: pointer;
+        vertical-align: middle;
+        padding: 0;
+        background-color: #ffffff;
+        color: #555555;
+        border: 1px solid #aaa;
+        text-shadow: none;
+        border-radius: 4px;
+        transition: box-shadow 0.25s ease;
+        z-index: 2;
+    }
+
+    #choose:hover {
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    #div_con {
+        position: relative;
+        width: 1000px;
+        height: 80vh;
+        left: 50%;
+        border: 1px solid #555555;
+        box-sizing: border-box;
+        margin-left: -500px;
+        margin-top: 70px;
+        overflow: hidden;
+    }
+    #div_msg {
+        position: absolute;
+        width: 1000px;
+        height: auto;
+        overflow-x: hidden;
+    }
+    footer {
+        width: 100%;
+        height: 10vh;
+        box-sizing: border-box;
+        padding-top: 10px;
+        background-color: #aaaaaa;
+        text-align: center;
+        line-height: 10vh;
+        overflow: hidden;
+    }
+</style>
+<body>
+    <header>
+        <select name="" id="choose">
+        </select>
+    </header>
+    <section id="div_con">
+        <div id="div_msg">
+        </div>
+    </section>
+    <footer>
+        <div>
+                把xx设为主页关于xx<span style="color: blue">About  Xxxx</span>xxxx(京)-经营性-2017-0020
+            ©2020 Baidu 使用xx前必读 意见反馈 京ICP证01230173号  京公网安备<span style="color: blue">1101000021000001</span>号
+        </div>
+    </footer>
+</body>
+<!--<script src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>-->
+<script>
+    let msg0 ='<h1 style="color:red">我是文章开头夜晚，帐篷中原本很静，突兀的声响划破安宁，楚风的手僵在那里，停止了所有动作</h1> ' 
+        +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。' +'这是一个最好的时代，也是一个最坏的时代。在这个时代里，有人成功，有人失败。在这个时代里，每个人都有自己的故事众多的创业者中，有一类科技创业群体，他们充满激情，梦想用技术改变世界，是资本市场的宠儿。媒体上闪耀着成功者的身影，但更多创业者还在为梦想坚持'
+        +'就像非典成就了阿里巴巴，现在的新冠让科技创业者们陷入一种焦虑，但又在努力寻找突破方向。'
+    
+    let msg1 = '<h2 style="color: blue">嫦娥四号中继星成功发射 将搭建地月“鹊桥”</h2> ' +
+        '新华社西昌5月21日电（记者白国龙、余晓洁）21日5时28分，我国在西昌卫星发射中心用长征四号丙运载火箭，成功将探月工程嫦娥四号任务“鹊桥”号中继星发射升空。' +
+        '这是世界首颗运行于地月拉格朗日L2点（简称地月L2点）的通信卫星，将为2018年底择机实施的嫦娥四号月球背面软着陆探测任务提供地月间的中继通信。<br/>' +
+        '长征四号丙运载火箭飞行25分钟后，星箭分离，将“鹊桥”直接送入近地点高度200公里，' +
+        '远地点高度40万公里的预定地月转移轨道，卫星太阳翼和中继通信天线相继展开正常。' +
+        '后续，“鹊桥”将经中途修正、近月制动和月球借力，进入月球至地月L2点的转移轨道，' +
+        '通过3次捕获控制和修正后，最终进入环绕地月L2点的使命轨道，地月L2点是卫星相对于地球和月球基本保持静止的一个空间点。<br/><br/> '+
+        '<h2 style="color: rebeccapurple">嫦娥四号中继星成功发射 将搭建地月“鹊桥”</h2> ';
+
+    let msg = msg0 + msg1 ;
+    // 滚动函数
+    function scrollme(time) {
+        cur_top--;
+        console.log('12222222',msg_height)
+        console.log('22333333',cur_top)
+        let vbety = msg_height/time
+        //如果整个消息都已经上移完了，则重新赋值消息，及移动距离
+        if (0 == vbety*cur_top + msg_height) {
+            console.log('已经移完了,开始下一次')
+            cur_top = 0;
+        }
+        div_msg.style.top = vbety*cur_top + 'px'
+    }
+    // 初始化 select
+    function addOption(){
+        //根据id查找对象，
+        let obj=document.getElementById('choose');
+        //添加一个选项
+        //obj.add(new Option("慢速","slow"));    //方法一：
+        // obj.options.add(new Option("text","value")); //方法二：
+        for(let i=0;i<optionArray.length;i++){
+            obj.options[i]=new Option(optionArray[i].key,optionArray[i].value);    //方法三：
+        }
+    }
+
+    let optionArray = [         // select 默认的值
+        {key:'最慢',value:'none'},
+        {key:'慢速',value:'slow'},
+        {key:'中速',value:'middle'},
+        {key:'快速',value:'fast'}
+    ]
+
+
+    let selctDom =  document.getElementById('choose');
+    //2.添加选项option
+    addOption()
+
+    //先赋值div
+    // $('#div_msg').html(msg);
+    let div_msg = document.getElementById('div_msg')
+    let div_con = document.getElementById('div_con')
+    div_msg.innerHTML = msg
+
+    //获取div的高度
+    // let msg_height = $('#div_msg').height();
+    let msg_height = div_msg.offsetHeight
+    //加2次，这样完全移动完的时候不至于出现空白
+    div_msg.innerHTML = msg + msg
+
+    // let con_height = $('#div_con').height();
+    let con_height = div_con.offsetHeight
+    let sub_height = con_height - msg_height;
+    console.log('msg_height=' + msg_height + ', con_height=' + con_height + ",sub_height=" + sub_height);
+
+    //当前顶部坐标
+    let cur_top = 0;
+
+    let iCount = setInterval(function () {  // iCount 初始化定时器
+        scrollme(500)
+    }, 50);
+    let iCount2 = null // 下拉选择速率时 定义的定时器
+    let isTrue=true;  // flag
+    let customTime = 500 // 自定义的时间
+
+    // 页面点击暂停滚动
+    div_con.onclick = function () {
+        if (isTrue) {
+            clearInterval(iCount)
+            clearInterval(iCount2)
+            isTrue = false
+        }else {
+            iCount = setInterval(function () {
+                scrollme(customTime)
+            },50)
+            isTrue = true
+        }
+    }
+
+    // 下拉框 dom 操作
+    selctDom.onchange= function () {
+        let value = selctDom.value
+        clearInterval(iCount)
+        clearInterval(iCount2)
+        // 自定义时间 由此动态计算出速率 乘以 定时器的内容频率 === 内容的高度
+        // (高度是固定不变的，其他是变量，速率是计算出来的，不可定义 *1 *2 *3)
+        let time = value === 'none' ? 500 :
+            value === 'slow' ? 400 :
+            value === 'middle' ? 300 :
+            value === 'fast' ? 200 : 100
+
+        customTime = time
+
+        iCount2 = setInterval(function () {
+            scrollme(time)
+        }, 50);
+
+    }
+
+
+    // $("#div_con").click(function(){
+    //     if(isTrue){
+    //         clearInterval(iCount);
+    //         isTrue=false;
+    //     }else{
+    //         iCount = setInterval("scrollme()", 20);
+    //         isTrue=true;
+    //     }
+    // });
+
+
+
+   
+</script>    
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>07_面试题1</title>
+</head>
+<body>
+<script type="text/javascript">
+    var name = 'The window'    // 没有闭包产生
+    var obj1 = {
+        name: 'My Object',
+        getNameFunc: function () {
+            return function () {
+                return this.name
+            }
+        }
+    }
+    console.log(obj1.getNameFunc()())  // The window  调用getNameFunc返回一个函数后 直接() 了 this 是window
+
+    var name2 = 'The window'    // 有一个闭包 一个外层函数 套一个内层函数 内层函数使用了 外层函数的变量 用的that
+    var obj2 = {
+        name: 'My Object',
+        getNameFunc: function () {
+            var that = this
+            return function () {
+                return that.name
+            }
+        }
+    }
+    console.log(obj2.getNameFunc()()) // MyObject  此时this 是 obj2
+</script>
+</body>
+</html>

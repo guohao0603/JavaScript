@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>04_作用域_面试题</title>
+</head>
+<body>
+<script type="text/javascript">
+    var x = 10
+    function fn() {
+        console.log(x)
+    }
+    function show(f) {
+        var x = 20
+        f()
+    }
+    show(fn)  // 输出10 因为函数作用域 在定义时就已经确定了，而不是调用时 所以fn函数执行时，内部找不到就直接到window作用域下找 x = 10
+</script>
+</body>
+</html>

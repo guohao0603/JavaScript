@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>02_借用构造函数继承</title>
+    <!--
+       方式二：借用构造函数继承
+       1.套路：
+            1.定义父类型构造函数
+            2.定义子类型构造函数
+            3.在子类型构造函数中调用父类构造
+       2.关键：
+            1.在子类型构造函数中通用call/apply()调用父类构造函数
+    -->
+</head>
+<body>
+<script>
+    function Person(name,age) {
+        this.name = name
+        this.age = age
+    }
+    function Student(name,age,price) {
+        Person.apply(this,name,age)   // 相当于 this.Person(name,age)
+        this.price = price
+    }
+</script>
+</body>
+</html>

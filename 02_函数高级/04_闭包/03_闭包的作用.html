@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>03_闭包的作用</title>
+</head>
+<body>
+<!--
+1.使用函数内部的变量在函数执行完后，仍然存活在内存中(延长了局部变量的声明周期)
+2.让函数外部可以操作(读写)到函数内部的数据(变量/函数)
+
+问题：
+    1.函数执行完后，函数内部声明的局部变量是否存在?一般不存在，存在于闭包中的变量才可能存在
+    2.在函数外部能直接访问函数内部的局部变量吗？不能，但我们可以通过闭包让外部操作它
+-->
+<script type="text/javascript">
+    function fn1(){
+        var a = 2
+        function fn2 () {
+            a++
+            console.log(a)
+        }
+        function fn3() {
+            a--
+            console.log(a)
+        }
+        return fn3
+    }
+
+    var f = fn1()  // 外部函数调用几次 产生几个闭包 这里有一个闭包
+    f()
+    f()
+
+</script>
+</body>
+</html>

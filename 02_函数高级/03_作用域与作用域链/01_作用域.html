@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>01_作用域</title>
+</head>
+<body>
+<!--
+1.理解
+    * 就是一块地盘，一个代码段所在的区域
+    * 他是静态的(相对于上下文对象)，在编写代码时就定义了
+2.分类
+    * 全局作用域
+    * 函数作用域
+    * 没有块作用域(ES6就有了)
+3.作用
+    * 隔离变量，不同作用域下同名变量不会有冲突
+-->
+<script type="text/javascript">
+    // if (true) {
+    //     var c = 3
+    // }
+    // console.log(c)  没有块作用域
+
+    var a = 10, b = 20
+
+    function fn(x) {
+        var a = 100, c = 300
+        console.log('fn()', a, b, c, x) //100,20,300,10
+        function bar(x) {
+            var a = 1000, d = 400
+            console.log('bar()',a,b,c,d,x)
+        }
+
+        bar(100) //1000,20,300,400,100
+        bar(200)//1000,20,300,400,200
+    }
+    fn(10) //
+</script>
+</body>
+</html>

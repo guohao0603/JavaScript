@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>引用变量赋值</title>
+</head>
+<body>
+<!--
+关于引用变量赋值问题
+    * 2个引用变量指向同一个对象,通过一个变量修改对象内部数据,另一个变量看到的是修改之后的数据
+    * 2个引用变量指向同一个对象，让其中一个引用变量指向另一个对象，另一个引用变量依然指向前一个对象
+-->
+<script>
+   
+    var obj1 = {name:'Tom'}
+    fn(obj1)
+    var obj2 = obj1
+    
+    obj2.age = 18
+    
+    console.log(obj1)  //18
+    
+    console.log(obj1)
+    console.log(obj1.age)  //18
+   
+    function fn (obj){     // 用var 定义的变量 和 声明的function 都是一开始执行好的
+        obj.name = 'Jack'
+    }
+   
+    
+    console.log(obj2.name)
+
+
+    var a = {age:12}
+    var b = a
+    a = {name:"BoB",age:13}
+    b.age = 14
+    console.log(b.age,a.name,a.age) //14 BoB 13
+
+    function fn2 (obj) {
+        obj = {age:15}
+        // obj.age = 15
+    }
+    fn2(a)
+    console.log(a.age) //13
+</script>
+</body>
+</html>

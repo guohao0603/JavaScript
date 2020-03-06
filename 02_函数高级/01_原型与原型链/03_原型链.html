@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>03_原型链</title>
+</head>
+<body>
+<!--
+1.原型链（）
+ * 访问一个对象的属性时，
+    * 先在自身属性中查找，找到返回
+    * 如果没有，在沿着_proto_这条链向上查找，找到返回
+    * 如果最终没有找到，返回undefined
+ * 别名：隐士原型链
+ * 作用：查找对象的属性（方法）
+2.构造函数/原型/实体对象的关系
+3.构造函数/.....
+
+-->
+<script type="text/javascript">
+    console.log(Object)
+    console.log(Object.prototype)
+    console.log(Object.prototype._proto_)
+    function Fn() {
+        this.test1 = function () {
+            console.log('test1()')
+        }
+    }
+    Fn.prototype.test2 = function () {
+        console.log('test2()')
+    }
+
+    var fn = new Fn()
+
+    fn.test1()
+    fn.test2()
+    console.log(fn.toString())
+    /*
+     1. 函数的显示原型指向的对象默认是空Object 实例对象(但object不满足)
+     */
+    console.log(Fn.prototype instanceof Object) //true
+    console.log(Object.prototype instanceof Object) //false
+    console.log(Object.prototype) //
+    console.log(Function.prototype instanceof Object)//false
+    /*
+      2.所有函数都是Function的实例(包含function)
+     */
+    console.log(Function._proto_===Function.prototype)
+
+    /*
+      3.Object的原型的对象是原型链尽头
+     */
+    console.log(Object.prototype._proto_) //null
+
+
+</script>
+</body>
+</html>

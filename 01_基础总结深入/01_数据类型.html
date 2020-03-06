@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据类型</title>
+</head>
+<body>
+   <!--
+      1.分类
+        * 基本(值)类型
+            * String : 任意字符串
+            * Number : 任意数字
+            * boolean : true/false
+            * undefined : undefined
+            * null : null
+        * 对象(引用)类型
+            * Object : 任意对象
+            * Function : 一种特别的对象(可以执行)
+            * Array : 一种特别的对象(数值下标，内部数据是有序的)
+      2.判断
+        * typeof: 可以判断: undefined / 数值 / 字符串 / 布尔值 / function
+                    不能判断 null 与 object object 与 array (因为他们返回的类型都是对象)
+        * instanceof: 判断对象的具体类型  例如 array
+        * ===  可以判断 undefined null
+   -->
+   <script type="text/javascript">
+       //1.基本
+       // typeof 返回数据类型的字符串表达
+       var a
+       console.log(a,typeof a,typeof a === 'undefined',a === undefined ) //undefined 'undefined' true true
+       console.log(undefined === 'undefined') // false
+
+       a = 4
+       console.log(typeof a === 'number')  // true
+       a = 'atgiue'
+       console.log(typeof  a === 'string') // true
+       a = true
+       console.log(typeof a === 'boolean') // true
+       a = null
+       console.log(typeof a,a === null)// object true
+
+       console.info('-----------------------------------')
+
+       //2.对象
+       var b1 = {
+           b2 : [1,'abd',console.log],
+           b3 : function () {
+               console.log('3333')
+               return function () {
+                   return 'guohao'
+               }
+           }
+       }
+
+       console.log(b1 instanceof Object,b1 instanceof Array) //true false
+       console.log(b1.b2 instanceof Array,b1.b2 instanceof Object) //true true
+       console.log(b1.b3 instanceof Function,b1.b3 instanceof Object) //true true
+       console.log(typeof b1.b2 === 'object') // true
+       console.log('66666',typeof b1) // 'object'
+       console.log('b1.b2[2]',typeof b1.b2[0]) // 'number'
+       console.log('7777',typeof b1.b2[2]); // 'function'
+       console.log('888888',typeof b1.b3) // 'function'
+      
+
+       b1.b2[2]("434")
+       console.log(b1.b3()())
+   </script>
+</body>
+</html>

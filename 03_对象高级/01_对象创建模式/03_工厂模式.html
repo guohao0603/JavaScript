@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>03_工厂模式</title>
+    <!--
+        方式三： 工厂模式
+        * 套路：通过工厂函数动态创建对象并返回
+        * 适用场景：需要创建多个对象
+        * 问题：对象没有一个具体属性，都是object类型
+    -->
+</head>
+<body>
+<script>
+    function createPerson(name,age) {
+        let obj = {
+            name: name,
+            age: age,
+            setName: function () {
+                this.name = name
+            }
+        }
+
+        return obj
+    }
+
+    let p1 = createPerson('tom',25)
+    console.log(p1)
+</script>
+</body>
+</html>

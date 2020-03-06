@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据类型2</title>
+</head>
+<body>
+    <!--
+        1.undefined 与 null的区别?
+          * undefined 代表定义未赋值
+          * null 定义并赋值,只是值为null
+        2.什么时候给变量赋值为null?
+           * 初始赋值 表明变量赋值为对象
+           * 结束赋值 让对象成为垃圾对象(被垃圾回收器回收)
+        3.严格区别变量类型与数据类型?
+           * 数据的类型
+              * 基本类型
+              * 对象类型
+           * 变量的类型 (变量内存值得类型)
+              * 基本类型 : 保存的就是基本类型的数据
+              * 引用类型 : 保存的是地址值
+    -->
+    <script type="text/javascript">
+        var a
+        console.log(a) //undefined
+        a = null
+        console.log(a) //null
+
+        var obj = null //初始赋值为null, 表明将要赋值为对象
+        //确定对象赋值
+        obj = ['addd',1233]
+        // 让obj 指向的对象成为垃圾对象(被垃圾回收器回收)
+        obj = null
+        console.log(obj)
+
+    </script>
+</body>
+</html>
