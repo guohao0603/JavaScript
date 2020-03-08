@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组去重</title>
+</head>
+<body>
+    <div>
+        Hello world!!
+    </div>
+</body>
+<script>
+  /*
+  双层循环
+
+  也许我们最先想到的是使用indexOf来循环判断一遍，但在这个方法之前，让我们
+  看看最原始的方法：
+
+  */
+    var array1 = [1,1,'1','1'];
+    function unique1(array){
+        // res用来存储结果
+        var res = [];
+        for (var i = 0, arrayLen = array.length; i< arrayLen; i++){
+            for (var j = 0, resLen = res.length; j< resLen; j++) {
+                if (array[i] === res[j]) {
+                    break;
+                }
+            }
+            // 如果array[i] 是唯一的，那么执行完循环，j等于resLen
+            if (j === resLen) {
+                res.push(array[i])
+            }
+        }
+        return res;
+    }
+    console.log(unique1(array1)); // [1,'1']
+    /*
+    在这个方法中，我们使用循环嵌套，最外层循环array，里面循环res，如果array[i]
+    的值和res[j]的值相等，就跳出循环，如果都不等于，说明元素是唯一的，这时候j
+    的值就会等于res的长度，根据这个特点进行判断，将值添加进res。
+
+    看起来很简单吧，之所以要讲一讲这方法，是因为-----兼容性好。
+    */
+    /*
+    indexOf
+
+    我们可以用indexOf简化内层循环：
+
+    */
+    var array2 = [1,1,'1'];
+    
+    function unique2 (array){
+        var res = [];
+        for (var i = 0,  len = array.length;i < len; i++){
+            var current = array[i];
+            if (res.indexOf(current) === -1) {
+                res.push(current)
+            }
+        }
+        return res;
+    }
+    console.log(unique2(array2)); // [1,'1']
+    /*
+    排序后去重
+
+    试想我们先将要去重的数组使用sort方法排序后，相同的值就会排在一起，然后
+    我们就可以只判断当前元素与上一个元素是否相同，相同就说明重复，不相同就
+    添加进res，让我们写个demo
+
+    */
+    var array3 = [1,2,2,1,4,'1',22];
+
+    function unique3 (array) {
+        var res = [];
+        var sortedArray = array.sort();  // sort() 根据unicode排序 只能9以内排序 否则传入函数进行判断 a-b 升序 b-a降序
+        console.log('sort', sortedArray);
+        var seen;
+        for (var i = 0, len = sortedArray.length; i<len; i++) {
+            // 如果是第一个元素或者相邻的元素不相同
+            if (!i || seen !== sortedArray[i]) {
+                res.push(sortedArray[i])
+            }
+            seen = sortedArray[i];
+        }
+        return res;
+    }
+    console.log(unique3(array3));
+    // 如果我们对一个已经排好序的数组去重，这种方法效率肯定高于使用indexOf。
+
+    /*
+    unique API
+
+    知道了这两种方法，我们可以去尝试写一个名为unique的工具函数，我们根据一个
+    参数isSorted判断传入的数组是否是已排序的，如果为true，我们就判断相邻元素
+    是否相同，如果为false，我们就使用indexOf进行判断
+
+    */
+    var array4 = [1,2,'1',2,1];
+    var array5 = [1,1,'1',2,2];
+
+    // 第一版
+    function unique4 (array, isSorted) {
+        var res = [];
+        var seen = [];
+
+        for (var i = 0,len = array.length; i < len; i++){
+            var value = array[i];
+            if (isSorted) {
+                if (!i || seen !== value) {
+                    res.push(value)
+                }
+                seen = value;
+            }
+            else if (res.indexOf(value) === -1) {
+                res.push(value)
+            }
+        }
+    return res;
+    }
+    console.log(unique4(array4)); // [1, 2, "1"]
+    console.log(unique4(array5, true)); // [1, "1", 2]
+
+    /*
+    优化
+
+    尽管unqique 已经可以试下去重功能，但是为了让这个API更加强大，我们来
+    考虑一个需求：
+    新需求：字母的大小写视为一致，比如'a' 和 'A' ，保留一个就可以了！
+
+    虽然我们可以先处理数组中的所有数据，比如讲所有的字母转成小写，然后再
+    传入unique函数，但是有没有方法可以省掉处理数组的这一遍循环，直接就在
+    去重的循环中做呢？让我们去完成这个需求：
+
+    */
+    var array6 = [1, 1, 'a', 'A', 2, 2];
+    // 第二版
+    // iteratee 英文释义：迭代 重复
+    function unique6 (array, isSorted, iteratee){
+        var res = [];
+        var seen = [];
+
+        for (var i = 0, len = array.length; i<len; i++) {
+            var value = array[i];
+            var computed = iteratee ? iteratee(value) : value;
+            if (isSorted) {
+                if (!i || seen !== computed) {
+                    res.push(value)
+                }
+                seen = computed;
+            }
+            else if (iteratee) {
+                if (seen.indexOf(computed) === -1) {
+                    seen.push(computed);
+                    res.push(value);
+                }
+            }
+            else if (res.indexOf(value) === -1) {
+                res.push(value)
+            }
+        }
+        return res;
+    }
+
+    console.log(unique6(array6,false,function(item){
+        return typeof item == 'string' ? item.toLowerCase() : item
+    })); // [1,'a',2]
+
+    /*
+    在这一版中也是最后 一版实现中，函数传递三个参数：
+
+    array：表示要去重的数组，必填
+
+    isSorted：表示函数传入的数组是否排过序，如果为true，将会采用更快的方法
+    进行去重。
+
+    iteratee：传入一个函数，可以对每个圆度进行重新计算，然后根据处理结果进行
+    去重
+
+    至此，我们已经仿照着underscore的思路写了一个unique函数。
+    */
+
+    /*
+    filter
+    ES5提供了filter方法，我们可以用来简化外层循环：
+
+    比如使用indexOf的方法：
+
+    */
+    var array7 = [1,2,1,1,'1'];
+    function unique7 (array) {
+        var res = array.filter(function(item,index,array){
+            return array.indexOf(item) === index
+        })
+        return res;
+    }
+    console.log(unique7(array7))
+    // 排序去重的方法：
+    var array8 = [1,2,1,1,'1'];
+    function unique8 (array) {
+        return array.concat().sort().filter(function(item,index,array){
+            return !index || item !== array[index - 1] 
+        })
+    }
+    console.log(unique8(array8))
+
+    /*
+    ES6
+    随着ES6的到来，去重的方法又有了进展，比如我们可以使用Set和Map数据结构，
+    以Set为例，ES6提供了新的数据结构Set。它类似于数组，但是成员的值都是唯一的
+    没有重复值。
+
+    是不是感觉就像是为去重而准备的？让我们来写一版：
+    */
+    var array9 = [1,2,1,1,'1'];
+    function unique9(array) {
+        return Array.from(new Set(array))
+    }
+    console.log(unique9(array9)); // [1,2,'1']
+    /*
+    甚至可以再简化下：
+        function unique(array){
+            return [...new Set(array)];
+        }
+    还可以再简化下：
+    var unique = (a) => [...new Set(a)]
+
+    此外如果用Map 的话：
+    function unique(arr) {
+        const seen = new Map();
+        return arr.filter((a) =>{ !seen.has(a) && seen.set(a,1)})
+    }    
+    */
+</script>
+
+</html>
