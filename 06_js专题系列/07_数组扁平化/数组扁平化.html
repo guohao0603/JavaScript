@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组扁平化</title>
+</head>
+<body>
+    <div>
+        Hello world!!
+    </div>
+</body>
+<script>
+    /*
+    扁平化
+
+    数组的扁平化，就是将一个嵌套多层的数组array(嵌套可以是任何层数组)转换
+    为只有一层的数组。
+
+    举个例子，假设有个名为flatten的函数可以做到数组扁平化，效果就会如下：
+    
+    var arr1 = [1,[2,[3,4]]];
+    console.log(flatten(arr1)); // [1,2,3,4]
+
+    知道了效果是什么样的了，我们可以去尝试着写这个 flatten 函数了
+    */
+    /*
+    递归
+
+    我们最一开始能想到的莫过于循环书序元素，如果还是一个数组，就递归调用
+    该方法：
+
+    */
+    // 方法1
+    {
+        let arr = [1,[2,[3,4]]];
+
+        function flatten(arr){
+            let result = [];
+            for (let i = 0,len = arr.length;i< len; i++) {
+                if (Array.isArray(arr[i])) {
+                    result = result.concat(flatten(arr[i]))
+                }
+                else {
+                    result.push(arr[i])
+                }
+            }  
+            return result;
+        }
+        console.log(flatten(arr)); // [1,2,3,4]
+    }
+    /*
+    toString
+
+    如果数组的元素都是数字，那我们可以考虑使用toString方法，因为：
+
+    1, [2, [3, 4]]].toString() // "1,2,3,4"
+
+    调用toString方法，返回了一个逗号分隔的扁平字符串，这时候我们再split，然后我们再
+    split，然后转换为数字不就可以实现扁平化了吗？
+
+    */
+    {
+        // 方法2
+        let arr = [1,[2,[3,4]]];
+
+        function flatten(arr) {
+            return arr.toString().split(',').map((item)=>{
+                return +item
+            })
+        }
+        console.log(flatten(arr))
+        // 然而这种方法使用的场景却非常有限，
+        // 如果数组是 [1, '1', 2, '2'] 的话，这种方法就会产生错误的结果。
+    }
+
+    /*
+    reduce
+
+    既然是对数组进行处理，最终返回一个值，我们就可以考虑使用reduce来简化代码:
+
+    */
+    {
+        // 方法3
+        let arr = [1,[2,[3,4]]];
+        function flatten(arr) {
+            return arr.reduce(function(prev,next){
+                return prev.concat(Array.isArray(next) ? flatten(next) : next)
+            },[])
+        }
+        console.log(flatten(arr))
+    }
+    /*
+    ES6 增加了扩展运算符，用于取出参数对象的所有可遍历属性，拷贝到当前对象之中：
+
+    var arr = [1,[2,[3,4]]];
+    console.log([].concat(...arr)); // [1,2,[3,4]]
+
+    我们用这种方法只可以扁平一层，但顺着这个方法一直思考，我们可以写出这样的方法：
+
+    */
+
+    {
+        // 方法4
+        let arr = [1,[2,[3,4]]];
+        function flatten(arr){
+            while (arr.some(item => Array.isArray(item))) {
+                arr = [].concat(...arr)
+            }
+            return arr;
+        }
+        console.log(flatten(arr))
+    }
+    /*
+    underscore
+
+    那么如何写一个抽象的扁平函数，来方便我们的开发呢，所有又到了我们抄袭
+    underscore的时候了
+
+    在这里直接给出注释源码，但是要注意，这里的flatten函数并不是最终的_.flatten
+    为了方便多个API进行调用，这里对扁平进行了更多配置。
+    */
+    {
+        /**
+         * 数组扁平化
+         * @param  {Array} input   要处理的数组
+         * @param  {boolean} shallow 是否只扁平一层
+         * @param  {boolean} strict  是否严格处理元素，下面有解释
+         * @param  {Array} output  这是为了方便递归而传递的参数
+         * 源码地址：https://github.com/jashkenas/underscore/blob/master/underscore.js#L528
+         */
+        function flatten(input,shallow,strict,output){
+            // 递归使用的时候会用到output
+            output = output || [];
+            let idx = output.length;
+            console.log(idx)
+
+            for (let i = 0;i<input.length; i++) {
+                let value = input[i];
+                // 如果是数组，就进行处理
+                if (Array.isArray(value)) {
+                    // 如果只是扁平一层，遍历数组，依此填入output
+                    if (shallow) {
+                        let j = 0;
+                        let length = value.length;
+                        while (j<length) output[idx++] = value[j++]; 
+                    }
+                    // 如果是全部扁平就递归，传入已经处理的output，递归中接着
+                    // 处理output
+                    else {
+                        flatten(value,shallow,strict,output);
+                        idx = output.length;
+                    }
+                }
+                // 不是数组，根据strict的值判断是跳过不处理还是放入output
+                else if (!strict) {
+                    output[idx++] = value;
+                }
+            }
+            return output;
+        }
+        console.log(flatten([1, [2, [3, 4]], 5], false, false)); // [ 1, 2, 3, 4, 5 ]
+    }
+    /*
+    解释下 strict，在代码里我们可以看出，当遍历数组元素时，如果元素不是数组，
+    就会对strict取反的结果进行判断，如果设置strict为true，就会跳过不进行任何
+    处理，这意味着可以过滤非数组的元素，举个例子：
+    var arr = [1, 2, [3, 4]];
+    console.log(flatten(arr, true, true)); // [3, 4]
+
+    那么设置 strict 到底有什么用呢？不急，我们先看下 shallow 和 strict 各种值对应的结果：
+
+    shallow true + strict false ：正常扁平一层
+    shallow false + strict false ：正常扁平所有层
+    shallow true + strict true ：去掉非数组元素
+    shallow false + strict true ： 返回一个[]
+    */
+</script>
+</html>
