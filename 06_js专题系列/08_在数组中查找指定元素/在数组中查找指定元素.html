@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查找指定元素</title>
+</head>
+<body>
+    <div>Hello world!</div>    
+</body>
+<script>
+    /*
+    在开发中，我们经常会遇到在数组中查找指定元素的需求，可能大家觉得这个需求
+    过于简单，然后如何优雅的去实现一个findIndex和findLastIndex、indexOf和
+    lastIndexOf 方法却是很少人去思考的。
+    */
+    /*
+    findIndex
+
+    ES6对数组新增了findIndex方法，它会返回数组中满足提供的函数的第一个元素的
+    索引，否则返回-1。
+
+    举个例子：
+    function isBigEnough(element){
+        return element >=15;
+    }
+    [12,5,8,130,44].findIndex(isBigEnough); // 3
+
+    findIndex 会找出第一个大于15的元素的下标，所以最后返回3。
+
+    */
+    //实现findIndex：
+    function findIndex(array,predicate,context){
+        for(var i = 0;i<array.length;i++) {
+            if (predicate.call(context,array[i],i,array)) return i; 
+        }
+        return -1;
+    }
+    console.log(findIndex([1, 2, 3, 4], function(item, i, array){
+        if (item == 3) return true;
+    })) // 2
+    /*
+    findLastIndex
+    findIndex 是正序查找，但正如 indexOf 还有一个对应的 lastIndexOf 方法，我们也想写一个倒序查找的 findLastIndex 函数。实现自然也很简单，只要修改下循环即可。
+
+    function findLastIndex(array, predicate, context) {
+        var length = array.length;
+        for (var i = length - 1; i >= 0; i--) {
+            if (predicate.call(context, array[i], i, array)) return i;
+        }
+        return -1;
+    }
+
+    console.log(findLastIndex([1, 2, 3, 4], function(item, index, array){
+        if (item == 1) return true;
+    })) // 0
+    */
+</script>
+</html>
