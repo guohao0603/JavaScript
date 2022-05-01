@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>03_对象</title>
+</head>
+<body>
+<!--
+1.什么是对象?
+    * 多个数据的封装体
+    * 用来保存多个数据的容器
+    * 一个对象代表现实中的一个事物
+2.为什么要用对象?
+    * 通一管理多个数据
+3.对象的组成
+    * 属性：属性名(字符串)和属性值(任意)组成
+    * 方法：一种特别的属性(属性值是函数)
+4.如何访问对象内部数据?
+    * .属性名  编码简单,有时不能用
+    * ['属性名'] 编码复杂
+-->
+<script type="text/javascript">
+    var p = {
+        name : 'Tom',
+        age : 18,
+        setName: function (name) {
+            this.name = name
+        },
+        setAge: function (age) {
+            this.age = age
+        }
+    }
+
+    p.setName('Jack')
+    p.setAge(99)
+    p['setAge'](100)
+    console.log(p['age'])
+    console.log(p)
+</script>
+</body>
+</html>

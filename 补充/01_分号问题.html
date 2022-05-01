@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>分号问题</title>
+</head>
+<body>
+<!--
+1.js 一条语句后面可以不加分号
+2.是否加分号是编码风格问题，没有应该不应该，只有自己喜欢不喜欢
+3.在下面两种情况下不加分号会有问题
+    * 小括号开头的前一条语句
+    * 中括号开头的前一条语句
+4.解决办法：在首行加分号
+5.强有力的例子：vue.js
+
+-->
+<script type="text/javascript">
+    var a = 3
+    ;(function(){
+        console.log(3333)
+    })()
+
+    var b = 4
+    ;[1,3].forEach(function (item,index) {
+            console.log(item + '---- '+index)
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>位置匹配</title>
+</head>
+<body>
+<script>
+//2.2.1
+     /*
+        比如我们把字符串的开头和结尾用 "#" 替换（位置可以替换成字符的！）：
+      */
+    let result = "hello".replace(/^|$/g,'#')
+    console.log(result)
+
+    // 多行匹配模式（即有修饰符 m）时，二者是行的概念，这一点需要我们注意
+
+    let result2 = "I\nlove\njavascript".replace(/^|$/gm,'#')
+    console.log(result2)
+// 2.2.2
+    // \b 是单词边界，具体就是 \w 与 \W 之间的位置，也包括 \w 与 ^ 之间的位置，和 \w 与 $ 之间的位置。
+    // 比如考察文件名 "[JS] Lesson_01.mp4" 中的 \b，如下：
+
+    let result3 = "[JS] Lesson_01.mp4".replace(/\b/g, '#')
+    console.log(result3)
+    //// => "[#JS#] #Lesson_01#.#mp4#"
+
+    let result4 = "[JS] Lesson_01.mp4".replace(/\B/g, '#');
+    console.log(result4);
+    // => "#[J#S]# L#e#s#s#o#n#_#0#1.m#p#4"
+
+
+//2.2.3
+    //比如 (?=l)，表示 "l" 字符前面的位置，例如
+    let result5 = "hello".replace(/(?=l)/g,'#')
+    console.log(result5)
+    //而 (?!p) 就是 (?=p) 的反面意思，比如：
+    let result6 = "hello".replace(/(?=p)/g,'#')
+    console.log(result6)
+// 2.3 位置特性
+    // "hello" == "" + "h" + "" + "e" + "" + "l" + "" + "l" + "" + "o" + "";
+    // 也就是说字符之间的位置，可以写成多个
+
+// 2.4.1 不匹配任何东西
+    // /.^/
+// 2.4.2 数字千位分割法
+    // 比如把 "12345678"，变成 "12,345,678"。
+    // 2.4.2.1
+    /*
+        其中 (?=\d{3}$)匹配 \d{3}$ 前面的位置 而\d{3}$匹配的是目标字符串最后那3位数字
+     */
+    let result7 = "12345678".replace(/(?=\d{3}$)/g, ',')
+    console.log(result7)
+
+    // 我们知道匹配开头可以使用 ^，但要求这个位置不是开头怎么办？
+    //easy，(?!^)，你想到了吗？测试如下：
+    let regex8 = /(?!^)(?=(\d{3})+$)/g;
+    let result8 = "12345678".replace(regex8, ',')
+    console.log(result8);
+    // => "12,345,678"
+    let result9 = "123456789".replace(regex8, ',');
+    console.log(result9);
+    // => "123,456,789"
+
+// 2.4.2.4. 支持其他形式
+    //如果要把 "12345678 123456789" 替换成 "12,345,678 123,456,789"。
+    //此时我们需要修改正则，把里面的开头 ^ 和结尾 $，修改成 \b
+    let regex10 = /(?!\b)(?=(\d{3})+\b)/g ; // (?!\b) === \B
+    let regex11 = /\B(?=(\d{3})+\b)/g ; //
+    let result10 = "12345678 123456789".replace(regex11, ',')
+    console.log(result10)
+
+
+// 2.4.2.5 货币格式化
+    // 1888 ====> $ 1,888.00
+    function format (num) {
+        return num.toFixed(2).replace(/\B(?=(\d{3})+\b)/g, ",").replace(/^/, "$$ ");
+    };
+    console.log( format(521452566666) );
+
+
+/*
+    /(?=.*[0-9])^[0-9A-Za-z]{6,12}$/
+
+    对于这个正则，我们只需要弄明白 (?=.*[0-9])^ 即可。
+
+    分开来看就是 (?=.*[0-9]) 和 ^。
+
+    表示开头前面还有个位置（当然也是开头，即同一个位置，想想之前的空字符类比）。
+
+    (?=.*[0-9]) 表示该位置后面的字符匹配 .*[0-9]，即，有任何多个任意字符，后面再跟个数字。
+
+    翻译成大白话，就是接下来的字符，必须包含个数字。
+
+
+    我们可以把原题变成下列几种情况之一：
+
+    • 同时包含数字和小写字母
+    • 同时包含数字和大写字母
+    • 同时包含小写字母和大写字母
+    • 同时包含数字、小写字母和大写字母
+    • 以上的 4 种情况是或的关系（实际上，可以不用第 4 条）。
+
+    最终答案是：
+    let regex = /((?=.*[0-9])(?=.*[a-z])|(?=.*[0-9])(?=.*[A-Z])|(?=.*[a-z])(?=.*[A-
+    Z]))^[0-9A-Za-z]{6,12}$/;
+
+    console.log( regex.test("1234567") ); // false 全是数字
+
+    console.log( regex.test("abcdef") ); // false 全是小写字母
+
+    console.log( regex.test("ABCDEFGH") ); // false 全是大写字母
+
+    console.log( regex.test("ab23C") ); // false 不足6位
+
+    console.log( regex.test("ABCDEF234") ); // true 大写字母和数字
+
+    console.log( regex.test("abcdEF234") ); // true 三者都有
+ */
+</script>
+</body>
+</html>

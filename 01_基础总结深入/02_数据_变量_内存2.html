@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>关于赋值和内存的问题</title>
+</head>
+<body>
+<!--
+    问题：var a = xxx ,a 内存中到底保存的是什么
+    * xxx 是基本数据，保存的就是这个数据
+    * xxx 是对象, 保存的是对象的地址值
+    * xxx 是一个变量，保存xxx的内存内容(可能是基本数据，可能是地址值)
+-->
+<script>
+    var a = 3   // 保存的是3
+    a = function () { // 保存的是这个函数的地址值
+
+    }
+    var b = 'abd0'
+    a = b // 保存的是值
+    b = {}
+    a = b // 保存的是地址值
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>02_对象字面量</title>
+    <!--
+        * 套路：使用{}创建对象，同时指定属性/方法
+        * 使用场景：起始是对象内部数据是确定的
+        * 问题：如果创建多个对象，有重复代码
+    -->
+</head>
+<body>
+<script>
+    let p = {
+        name: 'tom',
+        age: 10,
+        setName: function (name) {
+            this.name = name
+        }
+    }
+    // 测试
+    console.log(p.name,p.age)
+    p.setName('hahaha')
+    console.log(p.name,p.age)
+
+</script>
+</body>
+</html>

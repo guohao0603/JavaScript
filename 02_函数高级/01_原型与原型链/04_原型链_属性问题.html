@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>04_原型链_属性问题</title>
+</head>
+<body>
+<!--
+1.读取对象的属性值时：会自动到原型链中查找
+2.设置对象的属性值时：不会查找原型链，如果当前对象中没有此属性，直接添加此属性并设置其值
+3.方法一般定义在原型中，属性一般通过构造函数定义在对象本身上
+-->
+<script type="text/javascript">
+    function Fn() {
+
+    }
+    Fn.prototype.a = 'xxx'
+    var fn1 = new Fn()
+    console.log(fn1.a)
+
+    var fn2 = new Fn()
+    fn2.a = 'yyy'
+
+    console.log(fn1.a)
+</script>
+</body>
+</html>

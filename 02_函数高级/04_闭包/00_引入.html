@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>00_引入</title>
+</head>
+<body>
+<button>测试1</button>
+<button>测试2</button>
+<button>测试3</button>
+<script type="text/javascript">
+    var btns = document.getElementsByTagName('button')
+    //遍历加监听
+    // for (var i = 0;i<btns.length;i++) {
+    //     var obj = btns[i]
+    //     obj.index = i
+    //     obj.onclick = function () {
+    //         alert('第'+(this.index+1)+'个按钮')
+    //     }
+    // }
+
+
+    for (var i = 0;i<btns.length;i++) {
+        (function (i) {
+            var obj = btns[i]
+            obj.onclick = function () {
+                alert('第'+(i+1)+'个按钮')
+            }
+        })(i)
+    }
+</script>
+</body>
+</html>

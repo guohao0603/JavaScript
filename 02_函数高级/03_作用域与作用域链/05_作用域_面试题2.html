@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>05_作用域_面试题2</title>
+</head>
+<body>
+<script type="text/javascript">
+    var fn = function () {
+        console.log(fn)
+    }
+    fn()  // 输出fn函数
+
+    var obj = {
+        fn2:function () {
+            // console.log(fn2)
+            console.log(this.fn2)
+        }
+    }
+    obj.fn2() // 报错 找不到fn2  this.fn2 可以找到
+</script>
+</body>
+</html>
