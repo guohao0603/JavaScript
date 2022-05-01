@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组方法、类数组</title>
+</head>
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <script type="text/javascript">
+        // 返回一个新数组
+        // concat()
+        // var arr1 = ['a','b','c'];
+        // var arr2 = ['d','e','f'];
+        // var arr3 = arr1.concat(arr2);
+        // console.log(arr1,arr2,arr3);
+
+        // toString()
+        // var arr = ['a','b','c'];
+        // console.log(arr.toString());
+
+        // // slice(start,end)
+        // var arr = ['a','b','c','d','e','f'];
+        // var arr1 = arr.slice();
+        // console.log(arr1);// ['a','b','c']
+
+        // var arr2 = arr.splice(1,3); // 从1包含1 向后截取 
+        // // 包含3的位置 闭区间
+        // console.log(arr2);// ['b','d']
+
+
+        // join split
+        // var arr = ['a','b','c','d'];
+        // var str1 = arr.join();
+        // var str2 = arr.toString();
+        // var str3 = arr.join('-');
+        // console.log(str1); //a,b,c,d
+        // console.log(str2); //a,b,c,d
+        // console.log(str3);//a-b-c-d
+
+        // var arr1 = str3.split('-',3);  
+        // console.log(arr1);//["a,b,c"]
+
+        // 类数组 --- 类似于数组的对象
+        // var oDiv = document.getElementsByTagName('div');
+        // console.log(oDiv);
+        // function test(){
+        //     console.log(arguments)
+        //     for(var i = 0;i<arguments.length;i++){
+        //         console.log(arguments[i])
+        //     }
+        // }
+        // test(1,2,3,4,5,6)
+        // var obj = {
+        //     '0': 1,
+        //     '1': 2,
+        //     '2': 3,
+        //     '3': 4,
+        //     '4': 5,
+        //     '5': 6,
+        //     'length': 6,
+        //     'splice': Array.prototype.splice,
+        //     'push': Array.prototype.push
+        // };
+        // obj.push(7)
+        // console.log(obj);
+
+        var obj = {
+            '2': 3,
+            '3': 4,
+            '4': 5,
+            'length': 3,
+            'push': Array.prototype.push
+        }
+        obj.push(1);
+        obj.push(2);
+        // obj[3] = 1;
+        // obj[4] = 2;
+        console.log(obj);
+        // 2: 3
+        // 3: 1
+        // 4: 2
+
+        // 类数组 push 的原理
+        Array.prototype.push = function(elem){
+            this[this.length] = elem;
+            this.length ++;
+        }
+
+        var person = {
+            '0': '张小一',
+            '1': '张小二',
+            '2': '张小三',
+            'name': '张三',
+            'age': 32,
+            'weight': 140,
+            'height': 180,
+            'length': 3
+        }
+        Object.prototype.push = Array.prototype.push;
+        Object.prototype.splice = Array.prototype.splice;
+        person.push(120); // person[3] = 120
+        console.log(person);
+        for(var key in person){
+            if (person.hasOwnProperty(key)) {
+                console.log(person[key]);
+            }
+        }
+      
+    </script>
+</body>
+</html>

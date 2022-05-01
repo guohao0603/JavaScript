@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对象继承深入、call_apply、圣杯模式、模块化</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // 圣杯模式 
+        // 继承 和 隔离 实现 Student 只继承 Teacher的prototype 并且不影响 Teacher的prototype
+        // function Teacher(){
+        //     this.name = 'Mr.Li';
+        //     this.tSkill = 'JAVA';
+        // }
+        // Teacher.prototype = {
+        //     pSkill: 'JS/JQ'
+        // }
+        // var t = new Teacher();
+        // console.log(t);
+
+        // function Student(){
+        //     this.name = 'Mr.wang';
+        // }
+        // function Buffer(){} // 圣杯
+        // Buffer.prototype = Teacher.prototype;
+        // var buffer = new Buffer();
+        // Student.prototype = buffer;
+        // Student.prototype.age = 18;
+
+        // var s = new Student();
+        // console.log(s);
+        // console.log(buffer);
+
+
+        // Teacher.prototype.name = '张三';
+        // function Teacher(){}
+        // function Student(){}
+        // inherit(Student,Teacher);
+        // var s = new Student();
+        // var t = new Teacher();
+        // console.log(s);
+        // console.log(t);
+
+        // function inherit(Target,Origin){
+        //     function Buffer(){}
+        //     Buffer.prototype = Origin.prototype;
+        //     Target.prototype = new Buffer();
+        //     Target.prototype.constructor = Target; // 还原构造器
+        //     Target.prototype.super_class = Origin; // 设置继承源
+        // }
+
+        // function Compute(){
+        //     var num = 10;
+        //     this.add = function(){
+        //         num++;
+        //         console.log(num);
+        //     }
+        //     this.minus = function(){
+        //         num--;
+        //         console.log(num);
+        //     }
+
+        //     // 隐式 return this 形成闭包
+        // }
+
+        // var compute = new Compute();
+        // compute.add();
+        // compute.add();
+        // compute.minus();
+
+        // 模块化开发 防止对全局的污染
+        var inherit = (function(){
+            var Buffer = function(){}
+            return function(Target,Origin){
+                function Buffer(){}
+                Buffer.prototype = Origin.prototype;
+                Target.prototype = new Buffer();
+                Target.prototype.constructor = Target; // 还原构造器
+                Target.prototype.super_class = Origin; // 设置继承源
+            }
+        })()
+
+        Teacher.prototype.name = '张三';
+        function Teacher(){}
+        function Student(){}
+        inherit(Student,Teacher);
+        Student.prototype.age = 18;
+        var s = new Student();
+        var t = new Teacher();
+        console.log(s);
+        console.log(t);
+
+        var initProgrammer = (function(){
+            var Programmer = function(){}
+            Programmer.prototype = {
+                name: '程序员',
+                tool: '计算机',
+                work: '编写应用程序',
+                duration: '10个小时',
+                say: function(){
+                  console.log(`我是一名${this.myName},我的工作是用${this.tool}${this.work},我每天工作${this.duration},我每天工作需要用到${this.lang.toString()}。`);
+                }
+            }
+            function FrontEnd(){}
+            function BackEnd(){}
+            inherit(FrontEnd,Programmer);
+            inherit(BackEnd,Programmer);
+
+            FrontEnd.prototype.lang = ['HTML','CSS','JavaScript','Node'];
+            FrontEnd.prototype.myName = '前端';
+
+            BackEnd.prototype.lang = ['Java','SQL','Linux'];
+            BackEnd.prototype.myName = '后端';
+
+            return {
+                FrontEnd,
+                BackEnd
+            }
+        })()
+
+        var frontEnd = new initProgrammer.FrontEnd();
+        var backEnd = new initProgrammer.BackEnd();
+
+        frontEnd.say();
+        backEnd.say();
+
+
+    </script>
+</body>
+</html>

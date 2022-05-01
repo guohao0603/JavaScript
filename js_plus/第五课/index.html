@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>参数默认值,递归，预编译</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // 初始化参数 默认值:undefined
+        // es6 可以 形参直接赋值 a = 1
+        // function test (a = 1, b) {
+        //     console.log(a) // 1 
+        //     console.log(b)  // 2
+        // }
+        // test(undefined, 2);
+
+        // es5 通过 arguments 赋值
+        // function test2 (a, b) {
+        //     var a = arguments[0] || 1;
+        //     var b = arguments[1] || 2;
+        //     console.log(a + b); // 3
+        // }
+        // test2();
+
+        // 1. 定义一个函数，从wp接收一个n,算出n的阶乘,
+        // 不能用for循环
+        // n 的阶乘: n! = n * (n-1)!
+        // function fact (n) {
+        //     if (n === 1) {
+        //         return 1;
+        //     }
+        //     return n * fact(n - 1);
+        // }
+        // console.log(fact(5));
+
+        // n = 5
+        // fact(5) = 5 * fact(4);
+        // fact(4) = 4 * fact(3);
+        // fact(3) = 3 * fact(2);
+        // fact(2) = 2 * fact(1);
+        // fact(1) = 1;
+
+
+
+       // 2. 定义一个函数,从wp接收一个n,算出 斐波那契数列
+       // 的第n位，不能用for循环
+
+       // n3 = n2 + n1;
+       // n <= 2;
+       // function fb (n) {
+       //    if (n <= 2) {
+       //      return 1;
+       //    }
+       //    return fb(n -1) + fb(n -2);
+       // }
+
+       // console.log(fb(5));
+       // n = 5
+       //fb(5) = fb(4) + fb(3); // 3 + 2
+       //fb(4) = fb(3) + fb(2); // 2 + 1
+       //fb(3) = fb(2) + fb(1); // 1 + 1
+       // 现在 fb(2) fb(1) 都等于 1
+
+       // ****************预编译******************
+       // a.检查通篇的语法错误
+       // b.预编译的过程 函数和变量开始提升 
+       // c.解释一行,执行一行
+
+        // test() // 1
+        // function test () {
+        //     console.log(1)
+        // }
+        // console.log(b);// undefined
+        // var b = 2;
+       // 总结:函数声明整体提升,变量只有声明提升,赋值是不提升
+
+
+        // function test (a) {
+        //     console.log(a); // function a () {}
+        //     var a = 1;
+        //     console.log(a); // 1
+        //     function a () {};
+        //     console.log(a); // 1
+        //     var b = function () {};
+        //     console.log(b); // function () {}
+        //     function d () {};
+        // }
+        // test(2);
+       // AO activation object 活跃对象,函数上下文
+       // 1.寻找形参和变量声明
+       // 2.实参赋值给形参
+       // 3.找函数声明,赋值
+       // 4.执行
+       //    AO = {
+       //        a: undefined ->2 -> function () {} -> 1
+       //        b: undefined -> function () {}
+       //        d: function d () {}
+       //    }
+
+
+        // var a = 1;
+        // function a () {
+        //     console.log(2)
+        // }
+        // console.log(a); // 1
+        // GO global object 全局上下文
+        // 1.找变量
+        // 2.找函数声明
+        // 3.执行
+        // GO = {
+        //     a: undefined -> function a () {} -> 1
+        // }
+        //GO === window
+
+
+        // function test () {
+        //     var a = b = 1;
+        //     console.log(a);
+        // }
+        // test();
+        // GO = {
+        //    b: 1 
+        // }
+        // AO = {
+        //     a: undefined -> 1
+        // }
+       
+        // function test () {
+        //     console.log(b); // undefined
+        //     if (a) { 
+        //         var b = 2;
+        //     }
+        //     c = 3;
+        //     console.log(c); // 3
+        // }
+        // var a;
+        // test();
+        // a = 1;
+        // console.log(a); // 1
+
+        // 预编译 不看 if 
+        // GO = {
+        //   a: undefined
+        //   test: function test () {}
+        //   c: 3    
+        // }
+        // AO = {
+        //     b: undefined
+        // }
+
+        // function test () {
+        //     a = 1;
+        //     function a() {
+        //         var a = 2;
+        //         return a;
+        //     }
+        // }
+        // console.log(test()); // undefined
+   
+        // a = 1;
+        // function test (e) {
+        //     function e () {}
+        //     arguments[0] = 2;
+        //     console.log(e);//2
+        //     if (a) {
+        //         var b = 3;
+        //     }
+        //     var c;
+        //     a = 4;
+        //     var a;
+        //     console.log(b); // undefined
+        //     f = 5;
+        //     console.log(c); // undefined
+        //     console.log(a); // 4
+        // }
+        // var a;
+        // test(1);
+
+
+
+        // 面试题
+        // var a = false + 1;
+        // console.log(a); // 1
+
+        // var b = false == 1;
+        // console.log(b); // false
+        // console.log(-true); // -1
+        // console.log(+undefined - 1 + ''); // 字符串 的 NaN
+        // if (typeof(a) && (-true) + (+undefined) + '') {
+        //     console.log('通过了')
+        // } else {
+        //     console.log('没通过')
+        // }
+
+        // if (1 + 5 *'3' === 16) {
+        //     console.log('pass')
+        // } else {
+        //     console.log('nopass')
+        // }
+        // console.log('******************')
+        // console.log(!!' ') // true
+        // console.log(!!'') // false 
+        // console.log(!!false) // false 
+        // console.log(!!' ' + !!'' - !!false || '未通过'); // 1
+        // 1 + 0 + 0 || '未通过'
+
+
+        // 预编译 只看var 声明 和 函数声明 
+        // 函数执行才看 if 等等
+        a = 1;
+        function test (e) {
+            function e(){}
+            arguments[0] = 2;
+            console.log(e); // 2
+            if (a) {
+                var b = 3;
+            }
+            var c;
+            a = 4;
+            var a;
+            console.log(b); // undefined
+            f = 5;
+            console.log(c); // undefined
+            console.log(a); // 4
+        }
+        var a;
+        test(1);
+        console.log(a); // 1
+        console.log(f); // 5
+
+        // GO = {
+        //     a: undefined -> 1,
+        //     test: function test(){},
+        //     f: 5
+        // }
+        // AO = {
+        //     e: function e(){} -> 2,
+        //     b: undefined ,
+        //     c: undefined,
+        //     a: undefined -> 4
+        // }
+
+    </script>
+</body>
+</html>

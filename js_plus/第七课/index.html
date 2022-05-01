@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>立即执行函数,闭包深入,逗号运算</title>
+</head>
+<body>
+    <script type='text/javascript'>
+        // 自动执行，执行完成以后立即释放
+        // 立即执行函数 
+        // IIFE - immediately-inoked function expression
+        // 一定是表达式才能立即执行
+
+        // (function(a, b){
+        //     console.log(a + b);
+        // })(2, 3);
+
+        // var num = (function(a, b){
+        //     return a + b;
+        // })(3, 3);
+        // console.log(num);
+
+        // var test1 = function(){
+        //     console.log(2);
+        // }();
+        // console.log(test1);// 2 undefined  先立即执行打印2 
+        // 然后test1 被销毁了 打印undefined
+
+        // 函数前面加 运算符号 + - ！|| && 变成表达式
+        // + function test(){
+        //     console.log(333);
+        // }();
+        
+        // function test(a){
+        //     console.log(1111);
+        // }
+        // (5); // 这样不报错
+
+        // function test(){
+        //     console.log(11);
+        // }(); // 这样报错
+
+        // 逗号运算
+        // var num = (2 -1, 6 + 5, 24 + 1)
+        // console.log(num);// 25 只返回最后一个
+
+        // 经典案例
+        // function test(){
+        //     var arr = [];
+        //     for (var i = 0; i < 10; i++){
+        //         arr[i] = function(){
+        //             document.write(i + '')
+        //         }
+        //     }
+        //     return arr;
+        // }
+        // var myArr = test();
+        // console.log(myArr);
+        // myArr 里面是10个闭包 每个函数执行时 取i的值 是test
+        // 函数中i 最终的值10 也就是这10个闭包的scope都指向
+        // test 的 AO
+        // for(var j = 0; j < 10; j++) {
+        //     myArr[j](); // 10 个 10 
+        // }
+
+        // function testII(){
+        //     for (var i = 0; i < 10; i++){
+        //         (function(){
+        //             document.write(i + '')
+        //         })()
+        //     }
+        // }
+        // testII(); // 0 1 2 3 4 5 6 7 8 9
+
+        // function test(){
+        //     var arr = [];
+        //     for (var i = 0; i < 10; i++){
+        //         (function(j){
+        //             arr[j] = function(){
+        //                 document.write(j + '');
+        //             }
+        //         })(i)
+        //     }
+        //     return arr;
+        // }
+
+        // var myArr = test();
+        // console.log(myArr);
+        // for(var j = 0; j < 10; j++) {
+        //     myArr[j](); //0 1 2 3 4 5 6 7 8 9
+        // }
+
+        // 逗号运算 返回最后一个
+        // var fn = (
+        //     function test1(){
+        //         return 1;
+        //     },
+        //     function test2(){
+        //         return '2';
+        //     }
+        // )();
+        // console.log(typeof(fn));
+
+        // var a = 10;
+        // if (function b(){}) { //(function b(){}) 表达式忽略函数名 所以b是undefined
+        //     a += typeof(b);
+        // }
+        // console.log(a); // 10undefined
+
+
+        // 累加器
+        // function add(){
+        //     var i = 0;
+        //     function demo () {
+        //         console.log(++i);
+        //     }
+        //     return demo;
+        // }
+
+        // var test = add();
+        // test();
+        // test();
+        // test();
+        // test();
+        // test();
+
+        // 一个班级 添加学生 删除学生
+        function list(){
+            var arrList = [];
+            var operation = {
+                addRoom: function(value){
+                    arrList.push(value);
+                    console.log(arrList);
+                },
+                leftRoom: function(value){
+                    arrList = arrList.filter(item => {
+                        return item !== value
+                    });
+                   
+
+                    console.log(arrList);
+                }
+            }
+            return operation;
+        }
+
+        var demo = list();
+        demo.addRoom('小明');
+        demo.addRoom('小宏');
+        demo.addRoom('小往');
+        demo.addRoom('小里');
+
+        demo.leftRoom('小明');
+        demo.leftRoom('小里');
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基本语法</title>
+</head>
+<body>
+    <script type="text/javascript">
+     // c = a + b; 运算符号两边加空格 末尾加分号
+     // 不同代码块之间互不影响
+     // + - * / % () 括号运算 > 普通运算 > 赋值
+
+     // + 数学运算 字符换拼接
+     // 任何数据类型的值 + 字符串都是字符串
+
+     // / 除法
+     var a = 5, b = 2, c;
+     c = 5 / 2;
+     console.log(0 / 0) // NaN 数字类型
+     console.log(1 / 0) // Infinity 正无穷 数字类型
+     console.log(Math.floor(5 / 2)) // 2 向下取整
+     console.log(Math.floor(0 / 2)) // 0 向下取整
+     console.log(Math.ceil(5 / 2)) // 2 向上取整
+     // % 取余
+     console.log(4 % 6) // 第一个数字小 余就是第一个数字 4 
+     console.log(0 % 2) // 0
+     console.log(5 % 2) // 1
+
+     // a b 的值交换
+     //  let a1 = 2, b1 = 3;
+     //  [b1 , a1] = [a1 , b1]
+     //  console.log(b1 , a1)
+
+     // ++ -- 
+     // ++a a先加1 在参与运算
+     // a++ a先参与运算 在加1
+
+     // > < >= <= == === !== != 
+     // number - string string -> number
+     console.log(2 > '3') // false
+     // 字符串相比较 用ASCII码比较
+
+     // == 不看数据类型  === 既要值相等也要数据类型一样 
+     // NaN 与包括自己在内任何东西都不相等
+     console.log(NaN == NaN)   // false
+
+     // 条件:互斥 用 if else if 语句
+     // 条件判定有范围的 用 if 
+     var score = 85;
+     if (score >= 90 && score <= 100) {
+         console.log('您的成绩为A')
+     } else if (score >= 80 && score < 90) {
+         console.log('您的成绩为B')
+     } else if (score >= 70 && score < 80) {
+         console.log('您的成绩为C')
+     } else if (score >= 60 && score < 70) {
+         console.log('您的成绩为D')
+     } else if (score < 60 && score >= 0) {
+         console.log('您的成绩不合格')
+     } else {
+         console.log('您的成绩出现异常')
+     }
+
+     // 条件是定值 并且有多个 用switch
+     let city = window.prompt('请输入您的城市')
+     switch (city) {
+         case '北京':
+             console.log('20k')
+             break;
+        case '上海':
+            console.log('18k')
+            break;
+        case '广州':
+            console.log('16k')
+            break;
+        default:
+            console.log('9k')
+            break;
+     }
+
+     // 逻辑运算
+     // 与 && 或 || 非 !
+     // undefined null NaN "" 0 false 全部是假
+     // 除上面的以外全部都是真
+
+     var m = 1 && 2 && undefined && 10; // undefined
+     // 遇到真就往后走, 遇到假或走到最后就返回当前的值
+     // 1 && 1 返回1 真
+     // 0 && 1 返回0 假
+     // 1 && 0 返回0 假
+     // 0 && 0 返回0 假
+     // 证明了 if (... && ...) {} 两边条件都的为真
+
+     var n = 0 || null || 1 || 0;
+     // 遇到假就往后走, 遇到真或者走到最后就返回当前的值
+
+     console.log(m,n)
+
+     console.log(null || []) // []
+     console.log('' || [])  // []
+     console.log(undefined || [])  // []
+
+     var d = !1 // 1->true !1 ——> false
+     
+     // 行注释
+     /*
+      * 5656
+      * 88888
+      */
+
+    </script>
+</body>
+</html>

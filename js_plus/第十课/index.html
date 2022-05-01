@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型 原型链 闭包和立即执行函数 插件开发知识</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // function Car(opt){
+        //     this.brand = opt.brand;
+        //     this.color = opt.color;
+        //     this.displacement = opt.displacement;
+        // }
+        // function Person(opt){
+        //     this.name = opt.name;
+        //     this.age = opt.age;
+        //     this.income = opt.income;
+        //     this.selectCar = function(){
+        //         var myCar = new Car(opt.carOpt);
+        //         console.log(this.name + '选了一辆排量为' + myCar.displacement + '的' + myCar.color + myCar.brand);
+        //     }
+        // }
+        // var jack = new Person({
+        //     name: 'jack',
+        //     age: '21',
+        //     income: '20k',
+        //     carOpt: {
+        //         brand: '影豹',
+        //         color: '黑色',
+        //         displacement: '2.0'
+        //     }
+        // })
+        // jack.selectCar();
+
+
+        //*****************************
+
+        // 公共属性写到原型上 方法写到原型上 其他属性通过构造函数传递
+        // function HandPhone(color,brand,system){
+        //     this.color = color;
+        //     this.brand = brand;
+        //     this.system = system;
+        // }
+        // HandPhone.prototype.rom = '64G';
+        // HandPhone.prototype.ram = '8G';
+        // HandPhone.prototype.screen = '18:9';
+        // HandPhone.prototype.system = 'Android';
+        // HandPhone.prototype.call = function(){
+        //     console.log('I am calling');
+        // }
+        // function TelPhone(){}
+        // HandPhone.prototype = {
+        //     constructor: TelPhone, // 可以修改 constructor
+        //     rom: '64G',
+        //     ram: '8G',
+        //     screen: '18:9',
+        //     call: function(){
+        //         console.log('I am Calling');
+        //     }
+        // }
+
+        // var hp1 = new HandPhone('red','小米','Android');
+        // var hp2 = new HandPhone('black','iPhone8','IOS');
+        // console.log(HandPhone.prototype);
+        // console.log(hp1); 
+        // console.log(hp2);
+
+        // _proto_ 是装prototype(原型的一个容器) eg: _proto_:Person.prototype
+
+        function Person(){
+         this.name = 'jack'
+        }
+        var person = new Person()
+        console.log(person);
+        var p1 = {
+            name: 'lily'
+        }
+        person.__proto__ = p1;
+
+        console.log(person.name);
+        console.log(person.__proto__.name);
+        console.log(person.__proto__ === Person.prototype)//true
+
+        ;(function(){
+            var a = 1;
+            function add(){
+                a++;
+                console.log(a);
+            }
+            window.add = add;
+        })();
+
+        add(); // 2
+        add(); // 3
+        add(); // 4
+
+        // 插件写法
+        // 立即执行函数 前写; 防止报错
+        // ;(function(){
+        //     function Test(){
+
+        //     }
+        //     window.Test = Test;
+        // })();
+
+        // var test = new Test();
+
+        /**
+         * num1 num2
+         * 实现加减乘除
+         * */
+        // ;(function(){
+        //     function add(num1,num2){
+        //         return num1 + num2;
+        //     }
+        //     function reduce(num1,num2){
+        //         return num1 - num2;
+        //     }
+        //     function multiply(num1,num2){
+        //         return num1 * num2;
+        //     }
+        //     function except(num1,num2){
+        //         return num1 / num2;
+        //     }
+        //     window.add = add;
+        //     window.reduce = reduce;
+        //     window.multiply = multiply;
+        //     window.except = except;
+        // })();
+
+        // console.log('add===',add(22,33));
+        // console.log('reduce===',reduce(22,33));
+        // console.log('multiply===',multiply(2,3));
+        // console.log('except====',except(10,5));
+
+        ;(function(){
+            var Compute = function(opt){
+                this.x = opt.firstNum;
+                this.y = opt.secondNum;
+            }
+            Compute.prototype = {
+                add: function(){
+                    return this.x + this.y;
+                },
+                reduce: function(){
+                    return this.x - this.y;
+                },
+                multiply: function(){
+                    return this.x * this.y;
+                },
+                except: function(){
+                    return this.x / this.y;
+                }
+            }
+            window.Compute = Compute;
+        })();
+        var compute = new Compute({firstNum:20,secondNum:30})
+        console.log('add====',compute.add());
+        console.log('reduce====',compute.reduce());
+        console.log('multiply====',compute.multiply());
+        console.log('except======',compute.except());
+
+    </script>
+</body>
+</html>

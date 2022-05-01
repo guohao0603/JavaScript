@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链式调用、对象属性与遍历、this指向</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // 链式调用
+        var sched = {
+            wakeup: function(){
+                console.log('Running');
+                return this;
+            },
+            morning: function(){
+                console.log('Going shopping');
+                return this;
+            },
+            noon: function(){
+                console.log('Having a rest');
+                return this;
+            },
+            afternoon: function(){
+                console.log('Studying');
+                return this;
+            },
+            evening: function(){
+                console.log('Walking');
+                return this;
+            },
+            night: function(){
+                console.log('Sleeping');
+                return this;
+            }
+        }
+
+        sched.wakeup().morning().noon().afternoon().evening().night();
+
+        var obj = {name: 'jack'};
+        // 最早js引擎访问对象  obj['key']
+        console.log(obj['name']);
+
+        // 对象枚举
+        // var car = {
+        //     brand: 'Benz',
+        //     color: 'red',
+        //     lang: '5',
+        //     width: '2.5'
+        // }
+        // for(var key in car){
+        //     console.log(car[key]);
+        // }
+
+        // hasOwnProperty
+
+        function Car(){
+            this.brand = 'Benz';
+            this.color = 'red';
+            this.displacement = '3.0';
+        }
+        Car.prototype = {
+            lang: 5,
+            width: 2.5
+        }
+        var car = new Car();
+        for(var key in car){
+            // 不打印原型上的属性
+            if(car.hasOwnProperty(key)){
+                console.log(car[key]);
+            }
+        }
+
+        // 数组 对象 函数 类型判断
+        // 数组 [object Array]
+        // 对象 [object Object]
+        // 函数 [object Function]
+        var a = function(){};
+        var str = Object.prototype.toString.call(a);
+        console.log(str);
+        if (str === '[object Array]') {
+            console.log('是数组');
+        } else {
+            console.log('不是数组');
+        }
+
+
+        // this
+        // 全局this--> window
+        // 预编译函数this ---> window
+        // apply/call 改变this指向
+        // 构造函数的this --->指向实例化对象 
+
+        // callee caller
+         
+        // {} == {} false
+        // 引用值 的地址不同 
+        // var obj = {} ,obj1
+        // obj1 = obj
+        // 这时后 obj == obj1 true
+
+        var a = '1';
+        function test(){
+            var a = '2';
+            this.a = '3';
+            console.log(a);
+        }
+        test();// 2
+        new test();// 2  实例化后 this 才存在
+        console.log(a); // 3
+    </script>
+</body>
+</html>

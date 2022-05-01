@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>构造函数实例化,包装类</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // function Car(color,brand){
+        //     this.color = color;
+        //     this.brand = brand;
+        // }
+        // // this 指向实例化的对象-car1
+        // // new 的时候把this指向实例化的对象
+        // var car1 = new Car('red','Benz');
+        // console.log(car1.color);
+
+        // function Car(){
+        //     this.color = 'red';
+        //     return {} // 只可以返回引用类型 object array function
+        // }
+        // var car1 = new Car();
+        // console.log(car1); // {} 
+
+        // 包装类
+        // var a = 1;
+        // console.log(a); // 1
+
+        // var aa = new Number(1);
+        // aa.name = 'jack';
+        // console.log(aa); // 数字对象
+
+        // var bb = aa + 1;
+        // console.log(bb);
+        // console.log(aa);
+        // 类似的有 new Number new String new Boolean
+
+        // null 不可以设置任何方法，属性
+
+        // JS包装类
+        // var a = 123;
+        // a.len = 3;
+        // 转换过程:new Number(123).len = 3 , delete
+        // console.log(a.len); // undefined
+
+        // var str = 'abc';
+        // new String() --> 上有length
+        // console.log(str.length); // 3
+        // console.log(new String());
+        // console.log(new Number());
+
+        // 数组截断
+        // var arr = [1,2,3,4,5];
+        // arr.length = 3;
+        // console.log(arr); // [1,2,3]
+
+        // var name = 'hello';
+        // name += 10; //hello10
+        // var type = typeof(name); // string
+        // // var type = new String(typeof(name)) // 这样就可以输出 type.text
+        // console.log(type);
+        // if(type.length === 6){ // true
+        //     type.text = 'string' // new String(type).text = string - delete
+        // }
+        // console.log(type.text);// undefined
+
+        //***********************
+        // function Test(a,b,c){
+        //     var d = 1;
+        //     this.a = a;
+        //     this.b = b;
+        //     this.c = c;
+        //     function f(){
+        //         d++;
+        //         console.log(d);
+        //     }
+        //     this.g = f;
+        // }
+        // var test1 = new Test();
+        // test1.g(); // 2
+        // test1.g(); // 3
+        // var test2 = new Test();
+        // test2.g(); // 2
+
+        //****************************
+        // var x = 1, y = z = 0;
+        // function add(n){
+        //     return n = n + 1;
+        // }
+        // y = add(x);
+        // function add(n){
+        //     return n = n + 3;
+        // }
+        // z = add(x);
+        // console.log(x,y,z); // 1 4 4
+
+        // function foo(x){
+        //     console.log(arguments);
+        //     return x;
+        // }(1,2,3,4,5) // 这个不能打印 1 2 3 4 5
+
+        // function foo2(x){
+        //     console.log(arguments);
+        //     return x;
+        // }   
+        // foo2(1,2,3,4,5);
+
+        // (function foo3(x){
+        //     console.log(arguments);
+        //     return x;
+        // })(1,2,3,4,5)
+
+        // function b(x,y,a){
+        //     a = 10;
+        //     console.log(arguments[2]); // 10
+        // }
+        // b(1,2,3)
+
+        // UNICODE码 涵盖 ASCII码 
+        // let arr = 'hello'.split("");
+        // console.log(arr);
+        // let sum = 0;
+        // arr.map((item,index)=>{
+        //     console.log(item.charCodeAt(0));
+        //     sum += item.charCodeAt(0);
+        // })
+        // console.log(sum);
+    </script>
+</body>
+</html>

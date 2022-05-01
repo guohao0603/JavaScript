@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三目运算、对象克隆、浅拷贝、深拷贝</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // 三目运算
+        var a = 5;
+        var str = a > 0 ? '大于0' : '小于等于0';
+        
+
+        str = a > 0 ? (a > 3 ? '大于3' : '小于等于3')
+                    : '小于等于0';
+        console.log(str);
+
+        //拷贝、复制、克隆 clone
+
+        // 浅拷贝
+        // Object.prototype.num = 1;
+        // var person1 = {
+        //     name: '张三',
+        //     age: 18,
+        //     sex: 'male',
+        //     height: 180,
+        //     son: {
+        //         first: 'jack',
+        //         second: 'tom'
+        //     }
+        // }
+        // var person2 = clone(person1,person2)
+        // person2.name = '李四';
+        // person2.son.first = 'lily'
+        // console.log(person1,person2);
+
+        // function clone(origin,target){
+        //     var target = target || {};
+        //     for(var key in origin){
+        //        if(origin.hasOwnProperty(key)){
+        //         target[key] = origin[key]
+        //        }
+        //     }
+        //     return target;
+        // }
+
+        // 深拷贝
+        var person1 = {
+            name: '张三',
+            age: 18,
+            sex: 'male',
+            height: 180,
+            children: {
+                first: {
+                    name: '张小一',
+                    age: 18
+                },
+                second:{
+                    name: '张小二',
+                    age: 10
+                },
+                third: {
+                    name: '张小三',
+                    age: 4
+                },
+                car: ['Benz','Mazda']
+            }
+        }
+
+        function deepClone(origin,target){
+            var target = target || {},
+                toStr = Object.prototype.toString,
+                arrType = '[object Array]';
+            for(var key in origin){
+                if(origin.hasOwnProperty(key)){
+                  if(typeof(origin[key]) === 'object' && origin[key] 
+                  !== null){
+                    if(toStr.call(origin[key]) === arrType){
+                        target[key] = [];
+                    } else {
+                        target[key] = {};
+                    }
+                    deepClone(origin[key],target[key])
+                  } else {
+                      target[key] = origin[key]
+                  }
+                } 
+            }
+            return target;
+        }
+
+        // var person2 = deepClone(person1)
+        // person2.name = '李四';
+        // person2.children.four = {name: 'Tony',age:1};
+        // person2.children.car.push('BYD');
+        // console.log(person1,person2);
+
+        // 深拷贝 JSON.stringify() JSON.parse()
+        // var str = JSON.stringify(person1);
+        // var people = JSON.parse(str);
+        // people.children.car.push('BYD');
+        // console.log(person1,people);
+
+        // this 指向  谁调用this就指向谁
+        var name = '222';
+        var a = {
+            name: '111',
+            say: function(){
+                console.log(this.name);
+            }
+        }
+        var fun = a.say;
+        fun(); // 222
+        a.say(); // 111
+
+        var b = {
+            name: '333',
+            say: function(fun){
+                fun()
+            }
+        }
+        b.say(a.say); //222  a.say 的this 指向window
+        b.say = a.say; 
+        b.say(); // 333
+
+        // ******************************
+        function test(){
+            var marty = {
+                name: 'marty',
+                printName: function(){
+                    console.log(this.name);
+                }
+            }
+            var test1 = {
+                name: 'test1'
+            }
+            var test2 = {
+                name: 'test2'
+            }
+            var test3 = {
+                name: 'test3'
+            }
+            test3.printName = marty.printName;
+            marty.printName.call(test1); // test1
+            marty.printName.apply(test2);// test2 
+            test3.printName();// test3
+        }
+        test();
+
+        //****************************
+
+        var bar = {
+            a: '1'
+        };
+        function Bar(){
+            bar.a = 'a';
+            Object.prototype.b = 'b';
+            return function inner(){
+                console.log(bar.a);
+                console.log(bar.b);
+            }
+        }
+        Bar()()
+
+
+        function Foo(){
+            getName = function(){ 
+                console.log(1);
+            }
+            return this;
+        }
+        Foo.getName = function(){
+            console.log(2);
+        }
+        Foo.prototype.getName = function(){
+            console.log(3);
+        }
+        var getName = function(){ 
+            console.log(4);
+        }
+        function getName(){ 
+            console.log(5);
+        }
+
+        Foo.getName(); // 2
+        getName(); // 4 getName - undefined - function 5 - function 4
+        Foo().getName(); // 1
+        new Foo.getName(); // 2 . 运算符 高于 new 
+        new Foo().getName(); // 3
+        new new Foo().getName(); // 3  
+    </script>
+</body>
+</html>

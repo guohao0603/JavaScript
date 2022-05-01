@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型与原型链深入、对象继承</title>
+</head>
+<body>
+    <script type="text/javascript">
+        Professor.prototype.tSkill = 'JAVA';
+        function Professor(){}
+        var professor = new Professor();
+
+        Teacher.prototype = professor;
+        function Teacher(){
+            this.mSkill = 'JS/JQ';
+            this.success = {
+                alibaba: '20',
+                tencent: '30'
+            }
+        }
+        var teacher = new Teacher();
+
+        Student.prototype = teacher;
+        function Student(){
+            this.pSkill = 'HTML/CSS';
+        }
+        var student = new Student();
+        student.success.baidu = '90'
+        console.log(student,teacher);
+        
+        // 原型链的顶端 是 Object.prototype.__proto__  null 
+        // console.log(Object.prototype.__proto__) // null 
+
+        // function Car(){
+        //     this.brand = 'Banz';
+        // }
+        // Car.prototype = {
+        //     brand: 'Mazda',
+        //     intro: function(){
+        //         console.log('我是'+this.brand+'车');
+        //     }
+        // }
+        // var car = new Car();
+        // // this 指向谁就用谁的属性
+        // car.intro();// 我是Banz车
+        // Car.prototype.intro(); // 我是Mazda车
+
+
+        // 函数不写返回值 默认返回undefind
+        function Person(){
+            this.smoke = function(){
+                this.weight--;
+                return 123;
+                // 默认 return undefined
+            }
+        }
+        Person.prototype={
+            weight: 150
+        }
+        var person = new Person();
+        person.smoke();
+        console.log(person);// 149
+        console.log(Person.prototype); // 150  原型上的属性不会被改变
+
+        // call / apply 更改this指向
+        // 唯一区别 call 直接传参数 apply 用数组包裹传递参数
+        function Demo(brand,color){
+            this.brand = brand;
+            this.color = color;
+        }
+        var newCar = {};
+        Demo.apply(newCar,['Benz','red'])
+        // Demo.call(newCar,'Mazde','black')
+        console.log(newCar);
+
+
+        function Compute(){
+            this.plus = function(a,b){
+                console.log(a + b);
+            }
+            this.minus = function(a,b){
+                console.log(a - b);
+            }
+        }
+        function FullCompute(){
+            Compute.apply(this);
+            // 把Compute 中的this 指向到 FullCompute 的this
+            this.mul = function(a,b){
+                console.log(a * b);
+            }
+            this.div = function(a,b){
+                console.log(a / b);
+            }
+        }
+
+        var compute = new FullCompute();
+        compute.plus(1,2);
+        compute.minus(2,1);
+        compute.mul(2,1);
+        compute.div(2,1);
+
+
+        // 年龄为多少岁 姓名为xxx 买了一辆排量为xxx的什么颜色的什么牌子的车
+       
+        function Car(brand,color,pai){
+            this.brand = brand;
+            this.color = color;
+            this.pai = pai;
+        }
+        function People(name,age){
+            Car.apply(this,['Benz','红色','3.0'])
+            this.name = name;
+            this.age = age;
+            this.playCar = function(){
+                console.log('年龄为'+this.age+'岁'+this.name+'买了一辆排量为'+this.pai+'T的'+this.color+'的'+this.brand);
+            }
+        }
+        var people = new People('张三','24');
+        people.playCar();
+
+    </script>
+</body>
+</html>

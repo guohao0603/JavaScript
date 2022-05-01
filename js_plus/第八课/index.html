@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闭包高级,对象,构造函数,实例化</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // 对象字面量
+
+        // var obj = {
+        //     name: 'jack',
+        //     age: 24,
+        //     sex: 'man',
+        //     teach: function (){
+        //         console.log('I am teaching JS');
+        //     }
+        // }
+        // delete obj.sex;
+        // delete obj.teach;
+        // console.log('删除后的对象',obj);
+
+        // var attendance = {
+        //     students: [],
+        //     total: 0,
+        //     join: function(name){
+        //         this.students.push(name);
+        //         console.log(this.students);
+        //     },
+        //     leave: function(name){
+        //         var idx = this.students.indexOf(name);
+        //         if (idx !== -1) {
+        //             this.students.splice(idx,1);
+        //         }
+        //         console.log(this.students);
+        //     }
+        // }
+
+        // attendance.join('jack');
+        // attendance.join('lily');
+        // attendance.join('sun');
+        // attendance.join('rose');
+        // attendance.leave('lily');
+
+        // 构造函数
+        // 系统自带的构造函数
+        // var obj = new Object();
+        // obj.name = 'jack';
+        
+        // 自定义构造函数====》重要
+        // 大驼峰写法 
+        // function Teacher(opt){
+        //     this.name = opt.name;
+        //     this.sex = opt.sex;
+        //     this.smoke = function(){
+        //         console.log('I am smoking');
+        //     }
+        // }
+        // var teacher1 = new Teacher({
+        //     name: 'jack',
+        //     sex: 'man'
+        // });
+        // var teacher2 = new Teacher({
+        //     name: 'lily',
+        //     sex: 'woman'
+        // });
+        // console.log(teacher1,teacher2);
+        // 类似于
+        // var app = new Vue({
+        //     el: '#app',
+        //     data: {
+        //         message: 'hello world'
+        //     }
+        // })
+
+        // function Count(type,list){
+        //     var sum = 0;
+        //     var total = 1;
+        //     if (type === '+') {
+        //         for (var i = 0;i < list.length; i++) {
+        //             sum += list[i];
+        //         }
+        //         return sum;
+        //     } else if (type === '*'){
+        //         for (var i = 0;i < list.length; i++) {
+        //             total*= list[i];
+        //         }
+        //         return total;
+        //     }    
+        // }
+        // var add = Count('+',[1,2,3,4,5]);
+        // var add2 = Count('*',[1,2,3,4,5]);
+        // console.log(add);
+        // console.log(add2);
+    </script>
+</body>
+</html>

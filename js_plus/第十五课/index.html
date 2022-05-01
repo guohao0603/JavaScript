@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深拷贝实例、数组基础、数组方法、数组排序</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // 数组
+        // var arr = [];// 数组字面量
+        // var arr1 = new Array(); // 通过系统内置的Array构造函数声明数组
+        // var arr2 = Array();// 不使用
+
+        // // 对象
+        // var obj1 = {}; // 对象字面量
+        // var obj2 = new Object(); // 通过系统内置的Object构造函数声明对象
+        // var obj3 = Object();
+
+        // var arr = [,,];
+        // console.log(arr);//[empty × 2]  稀松数组
+
+        // var arr = [1,2,3,4,5];
+        // console.log(arr[5]);// undefined
+        // var obj = {
+        //     0: 1,
+        //     1: 2,
+        //     2: 3,
+        //     3: 4,
+        //     4: 5
+        // }
+        // console.log(obj[5]);// undefined
+
+        // console.log(Array.prototype);
+        // push-数组末尾添加 unshift-数组头部添加 返回值，都执行了方法以后的数组长度
+        // var arr = [1,2,3];
+        // arr.push(4);// arr.push ====> 继承于Array原型上的push方法
+        // console.log(arr);
+        // arr.unshift('a');
+        // console.log(arr);
+
+        // pop shift 没有参数 返回的是删除的值
+        // arr.pop(); // 数组末尾删除
+        // console.log('pop',arr);
+        // arr.shift();// 数组头部删除
+        // console.log('shift',arr);
+
+        // 实现push
+        // Array.prototype.myPush = function(){
+        //     for(var i = 0; i < arguments.length; i++){
+        //         arr[arr.length] = arguments[i];
+        //     }
+        //     return this.length;
+        // }
+        // arr.myPush(1,2,3)
+        // console.log('myPush',arr);
+
+        // reverse 倒序
+        // var arr = [1,2,3,4,5];
+        // console.log(arr.reverse()); //  [5, 4, 3, 2, 1]
+
+        // splice
+        // arr.splice(开始项的下标,剪切的长度,前切以后最后一位开始添加数据)
+        // var arr = [1,2,3,4,5];
+        // arr.splice(1,2,'a');
+        // console.log(arr); //  [1,a,4, 5]
+
+        // var arr = ['a','b','c','e'];
+        // arr.splice(3,0,'d');
+        // console.log(arr); //["a", "b", "c", "d", "e"]
+
+        // var arr = ['a','b','c','e'];
+        // function splice(arr,index){
+        //     return index+= index >=0 ? 0 : arr.length;
+        // }
+        // console.log(arr[splice(arr,1)]); // b
+        // console.log(arr[splice(arr,-2)]); // arr[2] c
+
+
+        // 排序 sort() 返回的是排序以后的数组
+        // var arr = [-1,-8,0,4,1];
+        // arr.sort();
+        // console.log(arr); // [-1, -8, 0, 1, 4]
+
+        // sort -> 按照ascii 码来排列的
+        // 参数 a , b
+        // 返回值 : 负值 a 就排前面
+        //          正值 b 就排前面
+        //           0 保持不动
+        // var arr = [27,48,5,7]; // 冒泡排序
+        // arr.sort(function(a,b){
+        //     if (a > b){
+        //         return 1;
+        //     } else {
+        //         return -1;
+        //     }
+        // });
+
+        // var arr = [27,48,5,7]; 
+        // arr.sort(function(a,b){  // 升序
+        //     return a - b;
+        // })
+
+        // arr.sort(function(a,b){ // 降序
+        //     return b - a;
+        // })
+        // console.log(arr); // [5, 7, 27, 48]
+
+        // 随机排序
+        // Math.random() -> 0 -1 开区间
+        // var arr = [1,2,3,4,5,6];
+        // arr.sort(function(a,b){
+        //     // var rand = Math.random();
+        //     // if (rand - 0.5 > 0) {
+        //     //     return 1;
+        //     // } else {
+        //     //     return -1;
+        //     // }
+        //     return Math.random() - 0.5;
+        // })
+        // console.log(arr);
+
+        var arr = [
+            {son: 'Jenny',age: 15},
+            {son: 'Lucy',age: 1},
+            {son: 'Crytal',age: 36},
+            {son: 'Tony',age: 14},
+            {son: 'jack',age: 21},
+            {son: 'lily',age: 48},
+            {son: 'Ben',age: 25}
+        ]
+
+        arr.sort(function(a,b){
+            return a.age - b.age
+        })
+        console.log(arr);
+
+        // 修改原数组的方法: push unshift pop shift reverse splice sort
+
+        // 实现unshift 方法
+        var arrU = ['d','e','f'];
+
+        // Array.prototype.myUnshift = function(){
+        //     var pos = 0;
+        //     for(var i = 0; i < arguments.length; i++){
+        //         this.splice(pos,0,arguments[i])
+        //         pos++;
+        //     }
+        //    return this.length;
+        // }
+
+         Array.prototype.myUnshift = function(){
+           var argArr = Array.prototype.slice.call(arguments)
+           var newArr = argArr.concat(this);
+           return newArr;
+        }
+        var newArr = arrU.myUnshift(1,2,3);
+        console.log(newArr);
+
+
+
+
+    </script>
+</body>
+</html>

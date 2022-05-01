@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>循环引用值初识 显示隐式类型</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // var i = 0;
+        // for (; i < 10;) {
+        //     console.log(i);
+        //     i++;
+        // }
+
+        // while (i < 10) {
+        //     console.log(i);
+        //     i++;
+        // }
+
+
+        // var i = 1;
+        // for (; i;) {
+        //     console.log(i)
+        //     i++;
+        //     if (i === 10) {
+        //         i = 0; // 等价于 break return   终止循环
+        //     }
+        // }
+
+        // 从0开始做加法,加到什么时候总和是小于100
+        // var sum = 0;
+        // for (var i = 0; i < 100; i++) {
+        //     sum += i;
+        //     console.log(i,sum);
+        //     if (sum >= 100) {
+        //         console.log(i);
+        //         break;
+        //     }
+        // }
+
+
+        // 100以内的数跳过可以被7整除或个位数是7的数
+        // for (var i = 0; i <= 100; i++) {
+        //     if (i % 7 == 0 || i % 10 == 7) {
+        //         continue; // 跳出当次循环 继续
+        //     }
+        //     console.log(i);
+        // }
+
+        // 可以被 4 5 6 整除的数
+        // for (var i = 0; i <= 100; i++) {
+        //     if (i % 4 === 0 || i % 5 === 0 || i % 6 === 0) {
+        //         console.log(i);
+        //     }
+        // }
+
+
+        // 打印 0-100 的数
+        // () 中只能有一句，不能写比较
+        // {} 中不能出现 i++ i--
+        // var i = 100;
+        // for (;i--;) { // for 循环中间的语句 是判断 语句 一旦是 0 false 就停止循环
+        //     console.log(i);
+        // }
+
+        // 10 的N 次方
+        // var n = 5;
+        // var num = 1;
+        // for (var i = 0; i < 5; i++) {
+        //     num *= 10;
+        // }
+        // console.log(num)
+
+        // n 的阶乘
+        // var n = 5;
+        // var num = 1;
+        // for (var i = 1; i <= 5; i++) {
+        //     num *= i
+        // }
+        // console.log(num)
+
+        // var num = 789 // 反转 987
+        // var a = num % 10;
+        // var b = (num - a) % 100 / 10;
+        // var c = (num - a - b*10) /100;
+        // console.log(parseInt('' + a + b + c))
+
+
+        // 打印100以内的质数 1 不是质数
+        // 仅仅能被1和自己整除的数
+        // var c = 0;
+        // for (var i = 2; i < 100; i++) {
+        //     for (var j = 1; j <= i; j++) {
+        //         if (i % j == 0) {
+        //             c++;
+        //         }
+        //     }
+        //     if (c == 2) {
+        //         console.log(i)
+        //     }
+        //     c = 0;
+        // }
+        
+        // 数据类型 number string boolean object undefined function 
+        // Object = 引用类型  object / array  
+        // console.log(typeof(123)) // number
+        // console.log(typeof('123')) // string
+        // console.log(typeof(false)) // boolean
+        // console.log(typeof(function(){})) // function Object
+        // console.log(typeof({})) // object
+        // console.log(typeof([]))  // object
+        // console.log(typeof(null)) // object  null ——> 空对象指针 
+        // console.log(typeof(undefined)) // undefined
+
+        // console.log(typeof(a)) // undefined
+        // console.log(typeof(typeof(a))) // string
+        // typeof 返回的值是 string
+
+        // 1、显示类型转换 / 2、隐式类型转换
+
+        // ***********************************显示类型转换
+        // var a = '123'; // 'true' // true // false
+        // console.log(typeof(Number(a)) + '-' + Number(a)) // number - 123 //number -  NaN //number - 1 // 0
+
+        // var a = '123'; // 
+        // console.log(typeof(parseInt(a)) + '-' + parseInt(a))
+
+        // console.log(parseInt('abc123'))  // NaN
+        // console.log(parseInt('123abc')) // 123 
+        // console.log(parseFloat('3.1415926')) // 3.1415926
+
+        // var num = parseFloat('3.1465926');
+        // console.log(num.toFixed(2)) // 3.15 四舍五入
+
+        // console.log(typeof(String(123))); // string
+        // console.log(typeof(123 + '')) // string
+
+        // var str = '3.14';
+        // console.log(str.toString()); // 3.14
+        
+        // console.log(Boolean(null)) //false
+
+        // ************************************隐式类型转换
+        // var a = '123'; // 看到a++ 转成 Number
+        // a++;
+        // console.log(a); // 124
+
+        // var a = "a" + 1; // 看到+  转 string String(1)
+        // console.log(a); // a1   
+
+        // var a = '3' * '2';  // 看到 * - / % string转换成 number
+        // console.log(a); // 6
+
+        // var a = 1 > '2'; // 转number > >= < <=  只要遇见一方是 number 另一边也转number
+        // console.log(a); // false
+
+        // var a = 'a' > 'b' // ascii 码比较
+
+        // var a = 1 === '1'; // 不转换
+        // console.log(a); // false  
+
+        // var a = NaN == NaN; // NaN 不等于任何一个东西
+        // console.log(a); // false
+
+        // var a1 = 2 > 1 > 3; //  1 就是 true 
+        // var a2 = 2 > 1 == 1;
+        // console.log(a1,a2); //false true
+
+        // var a = undefined == 0; // 
+        // console.log(a); // false
+        // console.log(null == 0); //false
+        // console.log(undefined == null); // true
+        // console.log(undefined === null); // false
+        // null 和 undefined 不等于任何数 包括0 
+        // null 和 undefined 的 值相等 但数据类型不一样
+
+        //  var num = '123'; // 正号 负号 要把 string 转 number 'abc'——> NaN
+        //  console.log(typeof(+ num))   // number
+
+        // isNaN 是不是NaN  先用Number() 转换 看看转换出来是不是NaN
+        // console.log(isNaN(NaN)); // true
+        // console.log(isNaN(123)); // false
+        // console.log(isNaN('123')); // false
+        // console.log(isNaN('a')); // true
+        // console.log(isNaN(null)); // false
+        // console.log(isNaN(undefined)); // true 
+        // console.log(Number(undefined))// NaN
+        // console.log(Number('a'))// NaN
+
+
+        // 斐波那契数列
+        /**
+        n1 n2 n3
+        1   1   2   3   5   8
+            n1  n2  n3
+                n1  n2  n3
+                    n1  n2  n3 
+        */
+        var n = parseInt(window.prompt('请输入第几位'));
+        var n1 = 1, n2 = 1, n3;
+        if (n <= 0) {
+            console.log('输入错误')
+        } else if (n <= 2) {
+            console.log(1)
+        } else {
+            for (var i = 2; i < n; i++) {
+                n3 = n1 + n2;
+                n1 = n2;
+                n2 = n3;
+            }
+            console.log(n3);
+        }
+    </script>
+</body>
+</html>

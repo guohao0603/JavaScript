@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错误信息、try catch、严格模式</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // JS 错误类型信息
+        // 1、SyntaxError 语法错误
+        // 2、ReferenceError 引用错误
+        // 3、RangeError 范围错误
+        // 4、TypeError 类型错误
+        // 调用不存在的方法 123()
+        // 5、URIError URI错误
+        // URI：统一资源标识符
+        // URL：统一资源定位符
+        // URN：统一资源名称
+
+        var myUrl = 'http://www.baidu.com?name=张三';
+        var str = '张三';
+        var newUrl = encodeURI(str);
+        var newnewUrl = decodeURI(newUrl);
+        console.log(newUrl);
+        console.log(newnewUrl);
+
+        // EvalError eval 函数执行错误
+        var obj = {
+            a: 1,
+            b: 2
+        }
+        console.log(eval(obj));
+        console.log(eval('obj'));
+       
+        // 手动抛出错误的方法
+        // try catch finally throw
+        try {
+            console.log('正常执行1');
+            console.log(a);
+            console.log('正常执行2');
+        }catch(e){
+            console.log(e.name + ':' + e.message);
+        }finally{
+            console.log('正常执行4')
+        }
+
+        // ES5严格模式
+        // ECMAScript
+        // 97 1.0
+        // 98 2.0
+        // 99 3.0 JS通行标准
+        // 07 4.0 草案 
+        // 08 4.0 中止  容易改善 3.1 4.0 保留的 - Harmony
+        // 3.1 - 更名为 ECMAScript 5
+        // 09 5.0 发布 Harmony -> 1/2 JS.NEXT 1/2->JS.NEXT.NEXT
+        // 11 5.1 ISO 国际标准几乎基于3.0的
+        // 13 ES6 = JS.NEXT JS.NEXT.NEXT = 7.0
+        // 15 ES6正式发布 ECMAScript2015
+
+        // ES5 正常模式 严格模式
+        // IE9 及以下IE 不支持严格模式
+        // 'use strict';
+
+        // var a = 1;
+        // var obj = {
+        //     a: 2
+        // }
+        // function test(){
+        //     var a = 3;
+        //     with(obj){ // 指定作用域
+        //         console.log(a);
+        //     }
+        // }
+        // test();
+
+
+
+        
+       
+    </script>
+</body>
+</html>

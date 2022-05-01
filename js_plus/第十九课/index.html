@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>垃圾回收、变量声明周期、标记清除、引用计数</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // 1、找出不再使用的变量
+        // 2、释放其占用内存
+        // 3、固定的时间间隔运行
+
+        // 标记清除
+        function test1(){
+            var a = 1; // 进入环境
+            return function(){
+                console.log(a);
+            }
+        }
+        var test = test1();
+        test(); // a 离开环境
+        test = null;
+    </script>
+</body>
+</html>

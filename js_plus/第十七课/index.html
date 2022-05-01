@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义原型方法、数组字符串去重、封装typeof</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // 数组按照元素的字节数排序
+        // unicode 0-255 1个字节 256- 2 个字节
+
+        // var arr = ['我爱你','hello','ok','你说what'];
+        // arr.sort(function(a,b){
+        //     return getBytes(a) - getBytes(b);
+        // })
+        // console.log(arr);
+        // function getBytes(str){
+        //     var bytes = str.length;
+        //     for(var i = 0; i < str.length; i++){
+        //         if (str.charCodeAt(i) > 255){
+        //             bytes ++;
+        //         }
+        //     }
+        //     return bytes;
+        // }
+        // console.log(getBytes('我爱你!'));
+
+        // 封装typeof 
+        function myTypeof(val){
+            var type = typeof(val);
+            var toStr = Object.prototype.toString;
+            var res = {
+                '[object Array]':'array',
+                '[object Object]':'object',
+                '[object Number]':'object number',
+                '[object String]':'object string',
+                '[object Boolean]':'object boolean'
+            }
+            if (val === null){
+                return 'null';
+            }else if(type === 'object'){
+                var ret = toStr.call(val);
+                return res[ret];
+            }else{
+                return type;
+            } 
+        }
+        console.log(myTypeof(true)); // boolean
+        console.log(myTypeof(new Boolean()));//object boolean
+        console.log(myTypeof(undefined));//undefined
+
+        // 数组去重
+
+        var arr = [0,2,4,5,1,255,56,2,1,0,'t','p','g','t','a'];
+
+        Array.prototype.unique = function(){
+            var temp = {};
+            var newArr = [];
+            for(var i = 0;i<this.length;i++){
+                if (!temp.hasOwnProperty(this[i])){
+                    temp[this[i]] = this[i];
+                    newArr.push(this[i]);
+                }
+            }
+            return newArr;
+        }
+        console.log(arr.unique());
+
+        var str = 'aaabbb13235451gg';
+        String.prototype.unique = function(){
+            var temp = {}, newStr = '';
+            for(var i = 0;i < this.length;i++){
+                if (!temp.hasOwnProperty(this[i])){
+                    temp[this[i]] = this[i];
+                    newStr += this[i];
+                }
+            }
+            return newStr;
+        }
+        console.log(str.unique());
+
+        var str1 = 'fasdfgsfeefasdsdfehkajhfkhekwafksafhka';
+        function test(str1){
+            var temp = {};
+            for(var i = 0;i < str1.length; i++){
+                if(temp.hasOwnProperty(str1[i])){
+                    temp[str1[i]]++;
+                } else {
+                    temp[str1[i]] = 1;
+                }
+            }
+            return temp;
+        }
+        console.log(test(str1));
+
+        function demo(){
+            console.log(typeof(arguments));
+        }
+        demo(); // 类数组 object
+
+        var test = function a(){
+            
+        }
+        console.log(typeof(a)); // undefined
+
+        // function week(day){
+        //     var weekDay = [
+        //         'Mon','Tue','Wed','Thu','Fri','Sat','Sun'
+        //     ]
+
+        //     weekDay[day - 1] !== undefined ? 
+        //     console.log(weekDay[day - 1]) :
+        //     console.log('I don\'t know')
+        // }
+
+
+        // 数组可以有empty 的项 返回的是 undefined
+        function week(day){
+            var weekDay = [
+                ,'Mon','Tue','Wed','Thu','Fri','Sat','Sun'
+            ]
+            weekDay[day] !== undefined ? 
+            console.log(weekDay[day]) :
+            console.log('I don\'t know')
+        }
+        week(0);
+        week(3);
+        week(8);
+    </script>
+</body>
+</html>

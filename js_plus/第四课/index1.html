@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函数基础</title>
+</head>
+<body>
+    <script type="text/javascript">
+      // 高内聚 低耦合 -> 模块单一责任制
+      // 解耦合 ——> 函数
+
+      // 函数的命名
+      // 不能数字开头 
+      // 字母 _ $ 
+      // 包含数字
+      // 小驼峰命名法 myWonderfullTest
+
+      // 函数组成
+      // function 函数名 参数(可选) 返回值() return
+
+      // 最基本的函数写法 - 函数声明
+      //   function test (参数) {
+      //       函数的执行语句;
+      //   }
+
+      // 函数声明 
+      /**
+      function test () {
+
+      }
+      */
+      // >匿名函数表达式 函数字面量
+      /**
+      var test = function () { // ->匿名函数
+
+      }
+      test();
+      */
+
+      /*
+      var aa = Number(window.prompt('a'));
+      var bb = Number(window.prompt('b'));
+      // 占位 -> 形式上占位 形式参数 形参
+      function test (a,b) {
+          console.log(test.length); // 形参 长度 2
+          console.log(arguments); // 传进来的实参
+          console.log(a + b);
+      }
+      // 实际参数 实参
+      test(aa, bb, 22);
+      // 形参和实参数量可不等 
+      */
+
+      // 一个函数调用时，累加他的实参值
+      /*
+      function sum () {
+          var a = 0;
+          for (var i = 0; i < arguments.length; i++) {
+             a += arguments[i]
+          }
+          console.log(a);
+      }
+      sum(1, 2, 3, 4, 5);
+      */
+       /*
+       function test (a,b) {
+           a = 3;
+           console.log(arguments[0]); // 3 实参可以被改变
+       } 
+       test(1,2); 
+       */
+
+       /*
+       function test (name) {
+          return name || '您没有填写姓名';
+       }
+       console.log(test());
+       // return：终止函数执行 返回数据
+       */
+
+       /*
+       b = 2;
+       function test(){
+           var a = 1;
+           console.log(b); // 2
+       }
+       test();
+       console.log(a); // not defined
+       */
+
+       /*
+       a = 1; // 全局变量
+       function test1() {
+           // 局部变量
+           var b = 2;
+           console.log(a); // 1
+           function test2(){
+               // 局部变量
+               var c = 3; 
+               console.log(b); // 2
+           }
+           test2();
+           console.log(c); //c is not defined 
+       }
+       test1();
+       */
+
+       /*
+       function test1(){
+           var a = 1;
+           console.log(b);
+       }
+       function test2(){
+           var b = 2;
+           console.log(a);
+       }
+       test1();
+       test2();
+       */
+
+       // 函数:
+       /**
+       一个固定的功能或者是程序段被封装的过程
+       实现一个固定的功能或者是程序，在这个封装体
+       中需要一个入口和一个出口
+       入口就是参数 出口就是返回值
+       */
+
+       var name = window.prompt('输入饮料名称');
+       function drink (name) {
+           switch (name) {
+               case  '可乐':
+                   return 4;
+                case '雪碧':
+                    return 5;
+                case '王老吉':
+                    return 6;
+                default:
+                    return '没有此饮料';
+           }
+       }
+       console.log(drink(name));
+
+       
+    </script>
+</body>
+</html>
